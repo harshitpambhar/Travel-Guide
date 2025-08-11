@@ -15,8 +15,8 @@ import {
   Wifi,
   Car,
   Utensils,
-  Pool,
-  Gym
+  Waves,
+  Dumbbell
 } from "lucide-react";
 import {
   Select,
@@ -118,11 +118,11 @@ const hotels = [
 
 const amenities = [
   { id: "wifi", label: "Free WiFi", icon: Wifi },
-  { id: "pool", label: "Swimming Pool", icon: Pool },
-  { id: "gym", label: "Fitness Center", icon: Gym },
+  { id: "pool", label: "Swimming Pool", icon: Waves },
+  { id: "gym", label: "Fitness Center", icon: Dumbbell },
   { id: "restaurant", label: "Restaurant", icon: Utensils },
   { id: "parking", label: "Free Parking", icon: Car },
-  { id: "spa", label: "Spa & Wellness", icon: Pool },
+  { id: "spa", label: "Spa & Wellness", icon: Waves },
 ];
 
 const starRatings = [1, 2, 3, 4, 5];

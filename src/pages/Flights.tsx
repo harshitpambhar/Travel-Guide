@@ -16,7 +16,7 @@ import {
   Star,
   Wifi,
   Coffee,
-  Baggage
+  Briefcase
 } from "lucide-react";
 import {
   Select,
@@ -203,7 +203,7 @@ const amenities = [
   { id: "wifi", label: "WiFi", icon: Wifi },
   { id: "meal", label: "Meal Included", icon: Coffee },
   { id: "entertainment", label: "Entertainment", icon: Coffee },
-  { id: "baggage", label: "Free Baggage", icon: Baggage },
+  { id: "baggage", label: "Free Baggage", icon: Briefcase },
 ];
 
 export default function FlightsPage() {

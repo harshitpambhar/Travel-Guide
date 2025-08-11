@@ -2,6 +2,7 @@ import { Star, Users, Clock, Heart, Share2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 interface ExperienceCardProps {
   id: string;
@@ -20,6 +21,7 @@ interface ExperienceCardProps {
 }
 
 export function ExperienceCard({
+  id,
   title,
   location,
   image,
@@ -33,7 +35,31 @@ export function ExperienceCard({
   isPopular,
   isExclusive,
 }: ExperienceCardProps) {
+  const navigate = useNavigate();
   const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
+
+  const handleBookNow = () => {
+    navigate(`/experiences/${id}`);
+  };
+
+  const handleWishlist = () => {
+    // Handle wishlist functionality
+    console.log("Added to wishlist:", id);
+  };
+
+  const handleShare = () => {
+    // Handle share functionality
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        text: `Check out this amazing experience: ${title}`,
+        url: window.location.href,
+      });
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      navigator.clipboard.writeText(window.location.href);
+    }
+  };
 
   return (
     <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 border-0 bg-white">
@@ -67,10 +93,10 @@ export function ExperienceCard({
 
         {/* Action buttons */}
         <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <Button size="sm" variant="secondary" className="h-8 w-8 p-0 bg-white/90 hover:bg-white">
+          <Button size="sm" variant="secondary" className="h-8 w-8 p-0 bg-white/90 hover:bg-white" onClick={handleWishlist}>
             <Heart className="h-4 w-4" />
           </Button>
-          <Button size="sm" variant="secondary" className="h-8 w-8 p-0 bg-white/90 hover:bg-white">
+          <Button size="sm" variant="secondary" className="h-8 w-8 p-0 bg-white/90 hover:bg-white" onClick={handleShare}>
             <Share2 className="h-4 w-4" />
           </Button>
         </div>
@@ -127,7 +153,10 @@ export function ExperienceCard({
             <span className="text-sm text-muted-foreground">per person</span>
           </div>
           
-          <Button className="bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300">
+          <Button 
+            onClick={handleBookNow}
+            className="bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300"
+          >
             Book Now
           </Button>
         </div>
