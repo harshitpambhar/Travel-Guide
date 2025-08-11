@@ -21,6 +21,7 @@ import PackageDetailPage from "@/pages/PackageDetail";
 import AdminPanelPage from "@/pages/AdminPanel";
 import SignUp from "@/pages/SignUp";
 import SignIn from "@/pages/SignIn";
+import SubmitLocationPage from "@/pages/SubmitLocation";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/submit-location" element={<SubmitLocationPage />} />
           <Route path="/ai-planner" element={<AIPlannerPage />} />
           <Route path="/experiences" element={<ExperiencesPage />} />
           <Route path="/experiences/:id" element={<ExperienceDetailPage />} />

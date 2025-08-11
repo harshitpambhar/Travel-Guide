@@ -64,10 +64,12 @@ const SignUp = () => {
     console.log("Submitted:", values);
     
     // Store user data in localStorage for the upcoming login
+    // Ensure we store the actual name from the form, not extracted from email
     const userData = {
-      name: mode === "user" ? values.name : values.adminName,
+      name: mode === "user" ? values.name : values.adminName, // Use the actual name field
       email: values.email,
-      type: mode
+      type: mode,
+      phone: mode === "user" ? values.phone : undefined
     };
     localStorage.setItem('signupUserData', JSON.stringify(userData));
     

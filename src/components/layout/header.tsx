@@ -15,7 +15,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState({ name: "John Doe", email: "john@example.com" });
+  const [user, setUser] = useState({ name: "", email: "" });
+  const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -30,6 +31,7 @@ export function Header() {
         setUser(JSON.parse(userData));
       }
     }
+    setIsLoading(false);
   }, []);
 
   const navItems = [
@@ -40,6 +42,7 @@ export function Header() {
     { name: "Nearby Places", href: "/ai-planner", isNew: true },
     { name: "Deals", href: "/deals" },
     { name: "VR Preview", href: "/vr-preview", isNew: true },
+    { name: "Submit Location", href: "/submit-location", isNew: true },
   ];
 
   const handleSignOut = () => {
@@ -83,7 +86,7 @@ export function Header() {
               </Button>
             </Link>
             
-            {isAuthenticated ? (
+            {isAuthenticated && !isLoading && user.name ? (
               <>
                 <Button variant="outline" onClick={handleSignOut}>
                   <LogOut className="h-4 w-4 mr-2" />
@@ -127,7 +130,7 @@ export function Header() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </>
-            ) : (
+            ) : !isLoading && (
               <>
                 <Link to="/signin">
                   <Button variant="outline">
@@ -224,7 +227,7 @@ export function Header() {
               ))}
             </nav>
             <div className="flex flex-col gap-2 mt-6">
-              {isAuthenticated ? (
+              {isAuthenticated && !isLoading && user.name ? (
                 <>
                   <Button variant="outline" className="justify-start" onClick={() => navigate("/profile")}>
                     <User className="h-4 w-4 mr-2" />
@@ -243,7 +246,7 @@ export function Header() {
                     Logout
                   </Button>
                 </>
-              ) : (
+              ) : !isLoading && (
                 <>
                   <Link to="/signin" className="w-full">
                     <Button variant="outline" className="justify-start w-full">

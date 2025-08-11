@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -22,9 +22,9 @@ import {
 } from "lucide-react";
 
 export default function UserProfilePage() {
-  const [user] = useState({
-    name: "tirth",
-    email: "tirth@example.com",
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
     avatar: "/placeholder.svg",
     phone: "+1 (555) 123-4567",
     location: "New York, USA",
@@ -33,6 +33,22 @@ export default function UserProfilePage() {
     totalReviews: 8,
     loyaltyPoints: 1250
   });
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Load user data from localStorage on component mount
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const parsedUser = JSON.parse(userData);
+      setUser(prevUser => ({
+        ...prevUser,
+        name: parsedUser.name || "Unknown User",
+        email: parsedUser.email || ""
+      }));
+    }
+    setIsLoading(false);
+  }, []);
 
   const [bookings] = useState([
     {
@@ -54,6 +70,50 @@ export default function UserProfilePage() {
       image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop"
     }
   ]);
+
+  // Show loading state while user data is being loaded
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <main className="pt-24 pb-10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center py-12">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                <p className="text-muted-foreground">Loading profile...</p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Show message if no user is logged in
+  if (!user.name || user.name === "Unknown User") {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <main className="pt-24 pb-10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center py-12">
+                <User className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-xl font-semibold mb-2">No user logged in</h3>
+                <p className="text-muted-foreground mb-4">
+                  Please log in to view your profile
+                </p>
+                <Button onClick={() => window.location.href = '/signin'}>
+                  Go to Login
+                </Button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

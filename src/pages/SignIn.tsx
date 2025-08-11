@@ -36,21 +36,24 @@ const SignIn = () => {
     // Replace with real authentication logic
     console.log("Signed in:", values);
     
-    // Get user data from signup or use default
+    // Get user data from signup or use email-based data
     let userData;
     const signupData = localStorage.getItem('signupUserData');
     
     if (signupData) {
-      // Use the data from signup
+      // Use the data from signup (this should have the actual name)
       userData = JSON.parse(signupData);
       localStorage.removeItem('signupUserData'); // Clean up signup data
     } else {
-      // Use default data (for demo purposes)
-      userData = { 
-        name: 'John Doe', 
-        email: values.email,
-        type: 'user'
-      };
+      // If no signup data exists, this means user is logging in without signing up first
+      // In a real app, this would query the database for existing user info
+      // For demo purposes, we'll show a message that they need to sign up first
+      toast({
+        title: "Account not found",
+        description: "Please sign up first to create an account.",
+        variant: "destructive"
+      });
+      return;
     }
     
     // Set authentication state to true (this would typically be done through context or state management)

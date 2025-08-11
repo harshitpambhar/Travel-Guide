@@ -57,6 +57,10 @@ This document describes the sign up functionality that has been implemented in t
 - **User Type Display:** Shows whether user signed up as "User" or "Admin"
 - **Email Display:** Shows the email address used for registration
 - **Data Persistence:** User information is maintained across sessions
+- **Name Consistency:** User names are consistent across all components (no more "John Doe" fallback)
+- **Loading States:** Proper loading states prevent showing incorrect user information during initialization
+- **Proper Name Storage:** Stores actual user names from signup forms, not extracted from email addresses
+- **Gmail ID Prevention:** Eliminates the issue of showing full Gmail IDs instead of user names
 
 ## Routes
 
@@ -163,3 +167,7 @@ The signup system is integrated with:
 - **Responsive Design:** Works seamlessly on both desktop and mobile devices
 - **Data Cleanup:** Temporary signup data is cleaned up after successful login
 - **Logout Redirect:** Users are redirected to login page for better UX flow
+- **Name Consistency Fix:** Eliminated "John Doe" fallback - now shows actual user names everywhere
+- **Loading State Management:** Added proper loading states to prevent showing incorrect user data during initialization
+- **Gmail ID Issue Fix:** Resolved problem where full email addresses were displayed instead of user names
+- **Proper Name Handling:** User profile now correctly displays the name entered during signup, not email-based fallbacks
