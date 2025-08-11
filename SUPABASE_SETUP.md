@@ -1,6 +1,6 @@
 # Supabase Integration Setup Guide
 
-This guide will help you set up Supabase for the GlobeTrotter application and import the hotel data.
+This guide will help you set up Supabase for the GlobeTrotter application and import the hotel data. It now includes flights, experiences, and user profiles.
 
 ## Prerequisites
 
@@ -44,6 +44,10 @@ yarn add @supabase/supabase-js
 2. Create a new query
 3. Copy the contents of `supabase/migrations/20240101000000_setup_hotels_schema.sql`
 4. Run the query to create the necessary tables and functions
+5. Apply the new migrations for flights, experiences, and profiles in order:
+   - `supabase/migrations/20250101000001_create_flights.sql`
+   - `supabase/migrations/20250101000002_create_experiences.sql`
+   - `supabase/migrations/20250101000003_create_profiles.sql`
 
 ### 5. Import the hotel data
 
@@ -114,11 +118,119 @@ const searchResults = await hotelService.searchHotels('beach');
 const featuredHotels = await hotelService.getFeaturedHotels(6);
 ```
 
+---
+
+## New Schemas Overview
+
+### Flights (`public.flights`)
+
+Purpose: Store flight options for search/booking.
+
+- id (uuid, PK)
+- flight_id (text, unique)
+- airline (text)
+- departure_airport (text)
+- arrival_airport (text)
+- departure_time (timestamptz)
+- arrival_time (timestamptz, nullable)
+- price (numeric(12,2)), currency (text)
+- duration_minutes (int, nullable)
+- baggage_policy (text, nullable)
+- departure_city_id (uuid, FK → cities.id)
+- arrival_city_id (uuid, FK → cities.id)
+- created_at, updated_at
+
+RLS:
+- Select: anon + authenticated
+- Insert/Update/Delete: authenticated (tighten in prod as needed)
+
+### Experiences (`public.experiences`)
+
+Purpose: Curated activities/attractions.
+
+- id (uuid, PK)
+- experience_id (text, unique)
+- name, description, location, type
+- price (numeric(12,2)), currency (text)
+- rating (numeric, nullable)
+- city_id (uuid, FK → cities.id)
+- country_id (uuid, FK → countries.id)
+- created_at, updated_at
+
+RLS:
+- Select: anon + authenticated
+- Insert/Update/Delete: authenticated
+
+### Profiles (`public.profiles`)
+
+Purpose: User profile linked to Supabase Auth.
+
+- id (uuid, PK)
+- profile_id (text, unique)
+- user_id (uuid, FK → auth.users.id, cascade)
+- username (text, unique)
+- home_currency (text)
+- travel_preferences (jsonb)
+- created_at, updated_at
+
+RLS:
+- Select: anon + authenticated (public viewing). Restrict further in prod if desired.
+- Insert/Update/Delete: owner only (`auth.uid() = user_id`)
+
+Foreign keys & Relationships:
+- Flights and experiences optionally link to existing `cities`/`countries`.
+- Profiles link to `auth.users`.
+
+---
+
+## Initial Data Import (Optional)
+
+You can seed flights/experiences similarly to hotels using service functions.
+
+```ts
+import { flightService } from '@/services/flightService';
+import { experienceService } from '@/services/experienceService';
+
+await flightService.create({
+  flight_id: 'SQ-22',
+  airline: 'Singapore Airlines',
+  departure_airport: 'SIN',
+  arrival_airport: 'JFK',
+  departure_time: '2025-09-01T00:55:00Z',
+  arrival_time: '2025-09-01T12:30:00Z',
+  price: 999.00,
+  currency: 'USD'
+});
+
+await experienceService.create({
+  experience_id: 'XP-TOKYO-FOOD',
+  name: 'Tokyo Night Food Tour',
+  location: 'Tokyo, Japan',
+  type: 'Food Tour',
+  price: 85,
+  currency: 'USD'
+});
+```
+
+---
+
+## Using the New Service Modules
+
+```ts
+import { flightService } from '@/services/flightService';
+import { experienceService } from '@/services/experienceService';
+import { profileService } from '@/services/profileService';
+
+const flights = await flightService.list({ departure_city_id: 'uuid-a', arrival_city_id: 'uuid-b' });
+const experiences = await experienceService.list({ locationContains: 'Kyoto', minRating: 4.5 });
+const me = await profileService.getOwn();
+```
+
 ## Security
 
-- Row Level Security (RLS) is enabled on all tables
-- By default, all users can read data
-- Only authenticated users with the 'admin' role can modify data
+- RLS is enabled on all tables.
+- By default, flights/experiences readable by everyone; writes limited to authenticated users.
+- Profiles are owner-writable; readable by everyone (adjust in production as needed).
 
 ## Next Steps
 

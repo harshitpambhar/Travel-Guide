@@ -23,8 +23,8 @@ import {
 
 export default function UserProfilePage() {
   const [user] = useState({
-    name: "John Doe",
-    email: "john.doe@example.com",
+    name: "tirth",
+    email: "tirth@example.com",
     avatar: "/placeholder.svg",
     phone: "+1 (555) 123-4567",
     location: "New York, USA",
