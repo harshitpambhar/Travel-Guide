@@ -9,6 +9,12 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Home } from "lucide-react";
+<<<<<<< HEAD
+=======
+import { supabase } from "@/lib/supabase";
+import bcrypt from 'bcryptjs';
+import { profileService } from "@/services/profileService";
+>>>>>>> df4bac4 (third commit)
 
 const userSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -43,6 +49,7 @@ export default function SignUp() {
     setIsSubmitting(true);
     
     try {
+<<<<<<< HEAD
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
@@ -70,6 +77,73 @@ export default function SignUp() {
       toast({
         title: "Error creating account",
         description: "Please try again later.",
+=======
+      // Sign up the user with Supabase auth
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+        email: values.email,
+        password: values.password,
+        options: {
+          data: {
+            name: values.name,
+            phone: values.phone,
+          },
+        },
+      });
+
+      if (signUpError) throw signUpError;
+
+      // Create an initial profile row linked to the auth user
+      const authedUser = signUpData.user;
+      if (authedUser?.id) {
+        try {
+          // Hash the password before storing in the users table (never store plaintext)
+          const passwordHash = await bcrypt.hash(values.password, 10);
+          await supabase.from('users').upsert({
+            id: authedUser.id,
+            email: values.email,
+            password_hash: passwordHash,
+          });
+
+          await profileService.upsertOwn({
+            profile_id: `profile_${Date.now()}`,
+            username: values.name,
+            home_currency: 'USD',
+            travel_preferences: { phone: values.phone },
+          } as any);
+        } catch (e) {
+          // Non-fatal: profile creation might fail if email confirmation is required
+          console.warn('Profile creation warning:', e);
+        }
+      }
+
+      // If email confirmations are disabled, Supabase returns a session and the user is signed in
+      if (signUpData.session && signUpData.user) {
+        const user = signUpData.user;
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('user', JSON.stringify({
+          id: user.id,
+          name: (user.user_metadata as any)?.name || user.email?.split('@')[0] || 'User',
+          email: user.email,
+          type: 'user',
+          phone: (user.user_metadata as any)?.phone,
+        }));
+        toast({
+          title: "Welcome!",
+          description: "Your account is ready and you are signed in.",
+        });
+        navigate('/');
+      } else {
+        toast({
+          title: "Account created!",
+          description: "Check your email to confirm your account before signing in.",
+        });
+        navigate('/signin');
+      }
+    } catch (error) {
+      toast({
+        title: "Error creating account",
+        description: (error as any)?.message || "Please try again later.",
+>>>>>>> df4bac4 (third commit)
         variant: "destructive",
       });
     } finally {

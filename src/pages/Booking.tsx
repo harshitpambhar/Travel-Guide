@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import { useState } from "react";
 import { hotels } from "./Hotels";
+=======
+import { useEffect, useState } from "react";
+>>>>>>> df4bac4 (third commit)
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
@@ -15,10 +19,18 @@ import {
   ArrowLeft,
   Lock
 } from "lucide-react";
+<<<<<<< HEAD
 
 export default function BookingPage() {
   const { id } = useParams();
   const hotel = hotels.find(h => h.id === id);
+=======
+import { hotelService } from "@/services/hotelService";
+
+export default function BookingPage() {
+  const { id } = useParams();
+  const [hotel, setHotel] = useState<any | null>(null);
+>>>>>>> df4bac4 (third commit)
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   
@@ -36,6 +48,7 @@ export default function BookingPage() {
     billingAddress: ""
   });
 
+<<<<<<< HEAD
   // If hotel is found, use its data, else fallback to experienceData
   const experienceData = hotel ? {
     title: hotel.name,
@@ -44,6 +57,33 @@ export default function BookingPage() {
     price: hotel.price,
     originalPrice: hotel.originalPrice,
     duration: hotel.stars + " star hotel"
+=======
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      if (!id) return;
+      try {
+        const data = await hotelService.getHotelById(id);
+        if (!mounted) return;
+        if (data) setHotel(data);
+      } catch {
+        // ignore; fallback below will render
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [id]);
+
+  // If hotel is found, map its fields; else fallback
+  const experienceData = hotel ? {
+    title: hotel.name,
+    location: hotel.location || (hotel.city ? `${hotel.city.name}, ${hotel.city.country?.name ?? ''}` : ''),
+    image: hotel.image_url || "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+    price: Number(hotel.price ?? 0),
+    originalPrice: undefined,
+    duration: ((hotel.rating ?? 4) | 0) + " star hotel"
+>>>>>>> df4bac4 (third commit)
   } : {
     title: "Universal Studios Singapore Adventure",
     location: "Sentosa Island, Singapore",
@@ -208,6 +248,15 @@ export default function BookingPage() {
                           src={experienceData.image}
                           alt={experienceData.title}
                           className="w-20 h-16 object-cover rounded-lg"
+<<<<<<< HEAD
+=======
+                          onError={(e) => {
+                            const target = e.currentTarget as HTMLImageElement;
+                            if (target.src !== '/placeholder.svg') {
+                              target.src = '/placeholder.svg';
+                            }
+                          }}
+>>>>>>> df4bac4 (third commit)
                         />
                         <div className="flex-1">
                           <h3 className="font-semibold text-sm">{experienceData.title}</h3>
