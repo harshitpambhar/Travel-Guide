@@ -89,10 +89,10 @@ export function Header() {
           <div className="hidden lg:flex items-center gap-3">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="relative flex items-center justify-center">
                   <Bell className="h-4 w-4" />
+                  <span className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5 border border-white">3</span>
                   <span className="sr-only">Notifications</span>
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">3</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80">
