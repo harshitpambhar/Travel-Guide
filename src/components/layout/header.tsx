@@ -109,10 +109,26 @@ export function Header() {
                   <User className="h-4 w-4 mr-2" />
                   Sign In
                 </Button>
-                <Button variant="outline" onClick={() => navigate("/admin")} className="border-orange-200 text-orange-700 hover:bg-orange-50">
-                  <Globe className="h-4 w-4 mr-2" />
-                  Admin
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="border-orange-200 text-orange-700 hover:bg-orange-50">
+                      <Globe className="h-4 w-4 mr-2" />
+                      Admin
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuItem onClick={() => navigate("/admin")}>Dashboard</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/admin/users")}>Users</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/admin/hotels")}>Hotels</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/admin/experiences")}>Experiences</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/admin/packages")}>Packages</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/admin/flights")}>Flights</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/admin/bookings")}>Bookings</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/admin/reviews")}>Reviews</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/admin/analytics")}>Analytics</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/admin/profile")}>Profile/Settings</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <Button className="bg-gradient-to-r from-primary to-accent">
                   Join Free
                 </Button>
@@ -156,7 +172,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-border/50">
+          <div className="lg:hidden py-4 border-t border-border/50 bg-white shadow-xl">
             <nav className="flex flex-col space-y-4">
               {navItems.map((item) => (
                 <div key={item.name} className="flex items-center">
