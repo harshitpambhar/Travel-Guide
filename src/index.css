@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Lux Travel Design System - All colors, gradients, fonts, etc defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Base colors - clean and travel-friendly */
+    --background: 0 0% 100%;
+    --foreground: 220 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    /* Travel-inspired primary colors - sunset orange */
+    --primary: 20 85% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 25 90% 65%;
+
+    /* Ocean-inspired secondary colors */
+    --secondary: 200 20% 95%;
+    --secondary-foreground: 200 15% 25%;
+
+    /* Muted tones for backgrounds */
+    --muted: 210 20% 96%;
+    --muted-foreground: 220 10% 50%;
+
+    /* Golden accents for highlights */
+    --accent: 45 85% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Subtle borders and inputs */
+    --border: 210 15% 88%;
+    --input: 210 15% 92%;
+    --ring: 20 85% 55%;
+
+    /* Enhanced radius for modern look */
+    --radius: 0.75rem;
+
+    /* Travel gradients */
+    --gradient-sunset: linear-gradient(135deg, hsl(20 85% 55%), hsl(45 85% 60%));
+    --gradient-ocean: linear-gradient(135deg, hsl(200 80% 60%), hsl(210 85% 70%));
+    --gradient-hero: linear-gradient(135deg, hsl(20 85% 55% / 0.9), hsl(200 80% 60% / 0.9));
+    
+    /* Premium shadows */
+    --shadow-card: 0 4px 20px -4px hsl(20 85% 55% / 0.15);
+    --shadow-card-hover: 0 8px 30px -6px hsl(20 85% 55% / 0.25);
+    --shadow-hero: 0 20px 60px -20px hsl(20 85% 55% / 0.4);
+
+    /* Smooth transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark theme with travel vibes */
+    --background: 220 15% 8%;
+    --foreground: 0 0% 95%;
+
+    --card: 220 15% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 220 15% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 20 85% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 25 90% 70%;
+
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 0 0% 90%;
+
+    --muted: 220 15% 12%;
+    --muted-foreground: 220 10% 65%;
+
+    --accent: 45 85% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 20%;
+    --input: 220 15% 15%;
+    --ring: 20 85% 60%;
+
+    /* Dark gradients */
+    --gradient-sunset: linear-gradient(135deg, hsl(20 85% 60%), hsl(45 85% 65%));
+    --gradient-ocean: linear-gradient(135deg, hsl(200 70% 50%), hsl(210 80% 60%));
+    --gradient-hero: linear-gradient(135deg, hsl(20 85% 60% / 0.9), hsl(200 70% 50% / 0.9));
+
+    /* Sidebar */
+    --sidebar-background: 220 15% 6%;
+    --sidebar-foreground: 0 0% 90%;
+    --sidebar-primary: 20 85% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 12%;
+    --sidebar-accent-foreground: 0 0% 90%;
+    --sidebar-border: 220 15% 18%;
+    --sidebar-ring: 20 85% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
