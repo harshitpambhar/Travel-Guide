@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,7 +37,7 @@ const deals = [
     originalPrice: 1200,
     discountedPrice: 799,
     discount: 33,
-    validUntil: "2024-02-15",
+    validUntil: "2024-01-23",
     category: "Hotels",
     rating: 4.8,
     reviewCount: 15420,
@@ -55,7 +55,7 @@ const deals = [
     originalPrice: 850,
     discountedPrice: 599,
     discount: 29,
-    validUntil: "2024-03-01",
+    validUntil: "2024-01-24",
     category: "Adventure",
     rating: 4.7,
     reviewCount: 8923,
@@ -73,7 +73,7 @@ const deals = [
     originalPrice: 1100,
     discountedPrice: 749,
     discount: 32,
-    validUntil: "2024-02-28",
+    validUntil: "2024-01-23",
     category: "Food Tours",
     rating: 4.9,
     reviewCount: 6789,
@@ -91,7 +91,7 @@ const deals = [
     originalPrice: 2500,
     discountedPrice: 1899,
     discount: 24,
-    validUntil: "2024-04-15",
+    validUntil: "2024-01-25",
     category: "Cruises",
     rating: 4.8,
     reviewCount: 15234,
@@ -109,7 +109,7 @@ const deals = [
     originalPrice: 3200,
     discountedPrice: 2399,
     discount: 25,
-    validUntil: "2024-05-01",
+    validUntil: "2024-01-26",
     category: "Adventure",
     rating: 4.9,
     reviewCount: 8923,
@@ -123,11 +123,11 @@ const deals = [
     title: "Maldives Paradise Escape",
     description: "6D5N overwater villa with all-inclusive package",
     location: "Maldives",
-    image: "https://plus.unsplash.com/premium_photo-1720760946886-286458e746ba?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQyfEZ6bzN6dU9ITjZ3fHxlbnwwfHx8fHw%3D?w=600&h=400&fit=crop",
+    image: "https://plus.unsplash.com/premium_photo-1720760946886-286458e746ba?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQyfEZ6bzN6dU9ITjZ3fHxlbnwwfHx8fDB8fHw%3D?w=600&h=400&fit=crop",
     originalPrice: 3800,
     discountedPrice: 2899,
     discount: 24,
-    validUntil: "2024-03-15",
+    validUntil: "2024-01-24",
     category: "Luxury",
     rating: 4.9,
     reviewCount: 7654,
@@ -160,6 +160,37 @@ const locations = [
   "Thailand"
 ];
 
+// Helper function to calculate time remaining
+const calculateTimeRemaining = (validUntil: string) => {
+  const now = new Date().getTime();
+  const validUntilTime = new Date(validUntil).getTime();
+  const timeDifference = validUntilTime - now;
+
+  if (timeDifference <= 0) {
+    return { expired: true, days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
+
+  const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+  return { expired: false, days, hours, minutes, seconds };
+};
+
+// Helper function to format flash sale timer
+const formatFlashSaleTimer = (timeRemaining: ReturnType<typeof calculateTimeRemaining>) => {
+  if (timeRemaining.expired) {
+    return "00:00:00";
+  }
+
+  const hours = timeRemaining.days * 24 + timeRemaining.hours;
+  const minutes = timeRemaining.minutes;
+  const seconds = timeRemaining.seconds;
+
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+};
+
 export default function DealsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
@@ -168,6 +199,21 @@ export default function DealsPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("discount");
   const [showFlashSales, setShowFlashSales] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  // Update time every second for real-time countdown
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  // Calculate flash sale timer (using the first flash sale deal)
+  const flashSaleDeal = deals.find(deal => deal.isFlashSale);
+  const flashSaleTimer = flashSaleDeal ? calculateTimeRemaining(flashSaleDeal.validUntil) : null;
+  const flashSaleFormatted = flashSaleTimer ? formatFlashSaleTimer(flashSaleTimer) : "00:00:00";
 
   const filteredDeals = deals.filter(deal => {
     const matchesSearch = deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -225,7 +271,7 @@ export default function DealsPage() {
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-2xl font-bold">24:15:32</div>
+                <div className="text-2xl font-bold font-mono">{flashSaleFormatted}</div>
                 <div className="text-sm text-red-100">Time Remaining</div>
               </div>
             </div>
@@ -295,7 +341,7 @@ export default function DealsPage() {
                 <Checkbox 
                   id="flash-sale"
                   checked={showFlashSales}
-                  onCheckedChange={setShowFlashSales}
+                  onCheckedChange={(checked) => setShowFlashSales(checked === true)}
                 />
                 <label htmlFor="flash-sale" className="text-sm font-medium flex items-center gap-1">
                   <Flame className="h-3 w-3" />
