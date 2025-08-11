@@ -53,6 +53,7 @@ export function LocationRequestManager() {
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const { toast } = useToast();
 
+<<<<<<< HEAD
   // Load requests from localStorage (including new submissions)
   useEffect(() => {
     const storedRequests = localStorage.getItem('locationRequests');
@@ -61,6 +62,96 @@ export function LocationRequestManager() {
     } else {
       setRequests([]);
     }
+=======
+<<<<<<< HEAD
+  // Load requests from localStorage (including new submissions)
+  useEffect(() => {
+    const storedRequests = localStorage.getItem('locationRequests');
+    if (storedRequests) {
+      setRequests(JSON.parse(storedRequests));
+    } else {
+      setRequests([]);
+    }
+=======
+  // Sample data - in real app, this would come from API
+  useEffect(() => {
+    const sampleRequests: LocationRequest[] = [
+      {
+        id: "1",
+        user: {
+          name: "Sarah Johnson",
+          email: "sarah.j@example.com",
+          id: "user1"
+        },
+        location: {
+          name: "Hidden Beach Cove",
+          city: "Bali",
+          country: "Indonesia",
+          coordinates: { lat: -8.3405, lng: 115.0920 },
+          category: "Beach",
+          description: "A secluded beach accessible only by boat or hiking trail. Crystal clear water and pristine white sand.",
+          photos: ["https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+          visitDate: "2024-01-15",
+          rating: 5,
+          review: "Absolutely breathtaking! This hidden gem is worth the effort to reach. Perfect for a peaceful day away from crowds."
+        },
+        status: "pending",
+        submittedAt: "2024-01-20T10:30:00Z"
+      },
+      {
+        id: "2",
+        user: {
+          name: "Michael Chen",
+          email: "mchen@example.com",
+          id: "user2"
+        },
+        location: {
+          name: "Mountain View Lodge",
+          city: "Swiss Alps",
+          country: "Switzerland",
+          coordinates: { lat: 46.8182, lng: 8.2275 },
+          category: "Mountain",
+          description: "Cozy lodge with panoramic mountain views, perfect for hiking and skiing enthusiasts.",
+          photos: ["https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+          visitDate: "2024-01-10",
+          rating: 4,
+          review: "Stunning views and excellent service. The hiking trails around the lodge are amazing."
+        },
+        status: "approved",
+        submittedAt: "2024-01-18T14:20:00Z",
+        adminNotes: "High-quality submission with detailed information and photos. Approved for addition to database.",
+        adminId: "admin1",
+        processedAt: "2024-01-19T09:15:00Z"
+      },
+      {
+        id: "3",
+        user: {
+          name: "Emma Rodriguez",
+          email: "emma.r@example.com",
+          id: "user3"
+        },
+        location: {
+          name: "Urban Art District",
+          city: "Berlin",
+          country: "Germany",
+          coordinates: { lat: 52.5200, lng: 13.4050 },
+          category: "Cultural",
+          description: "Vibrant street art district with galleries, cafes, and creative spaces.",
+          photos: ["https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop"],
+          visitDate: "2024-01-05",
+          rating: 4,
+          review: "Amazing street art and creative atmosphere. Great place to spend an afternoon exploring."
+        },
+        status: "declined",
+        submittedAt: "2024-01-12T16:45:00Z",
+        adminNotes: "Location already exists in our database with similar information. Declined to avoid duplication.",
+        adminId: "admin1",
+        processedAt: "2024-01-13T11:30:00Z"
+      }
+    ];
+    setRequests(sampleRequests);
+>>>>>>> df4bac4 (third commit)
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
   }, []);
 
   const handleStatusChange = (requestId: string, newStatus: 'approved' | 'declined', adminNotes?: string) => {

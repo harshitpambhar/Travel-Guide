@@ -9,6 +9,11 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Home } from "lucide-react";
+<<<<<<< HEAD
+=======
+import { supabase } from "@/lib/supabase";
+import bcrypt from 'bcryptjs';
+>>>>>>> df4bac4 (third commit)
 
 const signInSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -34,6 +39,7 @@ export default function SignIn() {
     setIsSubmitting(true);
     
     try {
+<<<<<<< HEAD
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
@@ -53,6 +59,39 @@ export default function SignIn() {
       }
       
       // Check if admin exists (pre-defined admin accounts + development accounts)
+=======
+      // First try Supabase auth (primary)
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: values.email,
+        password: values.password,
+      });
+
+      let userData: any = null;
+      if (!error && data.user) {
+        userData = {
+          id: data.user.id,
+          name: (data.user.user_metadata as any)?.name || data.user.email?.split('@')[0] || 'User',
+          email: data.user.email,
+          type: 'user',
+          phone: (data.user.user_metadata as any)?.phone,
+        };
+
+        // Optional: verify our own password hash record exists and matches (defense-in-depth)
+        const { data: usersRow } = await supabase
+          .from('users')
+          .select('password_hash')
+          .eq('id', data.user.id)
+          .maybeSingle();
+        if (usersRow?.password_hash) {
+          const matches = await bcrypt.compare(values.password, usersRow.password_hash);
+          if (!matches) {
+            console.warn('Stored password hash does not match provided password.');
+          }
+        }
+      }
+
+      // Fallback: check if admin exists (pre-defined admin accounts + development accounts)
+>>>>>>> df4bac4 (third commit)
       const adminAccounts = [
         {
           id: "admin_001",
@@ -118,7 +157,11 @@ export default function SignIn() {
     } catch (error) {
       toast({
         title: "Error signing in",
+<<<<<<< HEAD
         description: "Please try again later.",
+=======
+        description: (error as any)?.message || "Please try again later.",
+>>>>>>> df4bac4 (third commit)
         variant: "destructive",
       });
     } finally {

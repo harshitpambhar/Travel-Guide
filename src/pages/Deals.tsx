@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
+=======
+<<<<<<< HEAD
+import { useState, useEffect } from "react";
+=======
+import { useEffect, useMemo, useState } from "react";
+>>>>>>> df4bac4 (third commit)
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +34,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 
+<<<<<<< HEAD
 // Mock deals data
 const deals = [
   {
@@ -137,6 +146,9 @@ const deals = [
     remainingTime: "20 days left"
   }
 ];
+=======
+import { dealService, type TravelDeal } from "@/services/dealService";
+>>>>>>> df4bac4 (third commit)
 
 const categories = [
   "All Categories",
@@ -160,6 +172,10 @@ const locations = [
   "Thailand"
 ];
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
 // Helper function to calculate time remaining
 const calculateTimeRemaining = (validUntil: string) => {
   const now = new Date().getTime();
@@ -191,6 +207,11 @@ const formatFlashSaleTimer = (timeRemaining: ReturnType<typeof calculateTimeRema
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 };
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> df4bac4 (third commit)
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
 export default function DealsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
@@ -199,6 +220,10 @@ export default function DealsPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("discount");
   const [showFlashSales, setShowFlashSales] = useState(false);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // Update time every second for real-time countdown
@@ -223,6 +248,38 @@ export default function DealsPage() {
     const matchesLocation = selectedLocation === "All Locations" || deal.location.includes(selectedLocation);
     const matchesPrice = deal.discountedPrice >= priceRange[0] && deal.discountedPrice <= priceRange[1];
     const matchesFlashSale = !showFlashSales || deal.isFlashSale;
+=======
+  const [deals, setDeals] = useState<TravelDeal[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        setLoading(true);
+        const data = await dealService.getAll();
+        if (!mounted) return;
+        setDeals(data);
+        setError(null);
+      } catch (e: any) {
+        setError(e.message || 'Failed to load deals');
+      } finally {
+        setLoading(false);
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
+
+  const filteredDeals = deals.filter(deal => {
+    const matchesSearch = deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         (deal.description || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         (deal.location || '').toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === "All Categories" || deal.category === selectedCategory;
+    const matchesLocation = selectedLocation === "All Locations" || (deal.location || '').includes(selectedLocation);
+    const matchesPrice = deal.discounted_price >= priceRange[0] && deal.discounted_price <= priceRange[1];
+    const matchesFlashSale = !showFlashSales || deal.is_flash_sale;
+>>>>>>> df4bac4 (third commit)
 
     return matchesSearch && matchesCategory && matchesLocation && matchesPrice && matchesFlashSale;
   });
@@ -232,11 +289,19 @@ export default function DealsPage() {
       case "discount":
         return b.discount - a.discount;
       case "price":
+<<<<<<< HEAD
         return a.discountedPrice - b.discountedPrice;
       case "rating":
         return b.rating - a.rating;
       case "validity":
         return new Date(a.validUntil).getTime() - new Date(b.validUntil).getTime();
+=======
+        return a.discounted_price - b.discounted_price;
+      case "rating":
+        return (b.rating || 0) - (a.rating || 0);
+      case "validity":
+        return new Date(a.valid_until).getTime() - new Date(b.valid_until).getTime();
+>>>>>>> df4bac4 (third commit)
       default:
         return b.discount - a.discount;
     }
@@ -270,10 +335,14 @@ export default function DealsPage() {
                   <p className="text-red-100">Up to 50% off on selected packages</p>
                 </div>
               </div>
+<<<<<<< HEAD
               <div className="text-right">
                 <div className="text-2xl font-bold font-mono">{flashSaleFormatted}</div>
                 <div className="text-sm text-red-100">Time Remaining</div>
               </div>
+=======
+              <div className="text-right text-sm">Live offers, updated daily</div>
+>>>>>>> df4bac4 (third commit)
             </div>
           </Card>
 
@@ -341,7 +410,15 @@ export default function DealsPage() {
                 <Checkbox 
                   id="flash-sale"
                   checked={showFlashSales}
+<<<<<<< HEAD
                   onCheckedChange={(checked) => setShowFlashSales(checked === true)}
+=======
+<<<<<<< HEAD
+                  onCheckedChange={(checked) => setShowFlashSales(checked === true)}
+=======
+                  onCheckedChange={(checked) => setShowFlashSales(!!checked)}
+>>>>>>> df4bac4 (third commit)
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
                 />
                 <label htmlFor="flash-sale" className="text-sm font-medium flex items-center gap-1">
                   <Flame className="h-3 w-3" />
@@ -393,9 +470,13 @@ export default function DealsPage() {
 
           {/* Results */}
           <div className="mb-6">
+<<<<<<< HEAD
             <p className="text-muted-foreground">
               Showing {sortedDeals.length} of {deals.length} deals
             </p>
+=======
+            <p className="text-muted-foreground">{loading ? 'Loading deals…' : error ? `Error: ${error}` : `Showing ${sortedDeals.length} of ${deals.length} deals`}</p>
+>>>>>>> df4bac4 (third commit)
           </div>
 
           {/* Deals Grid */}
@@ -409,24 +490,41 @@ export default function DealsPage() {
                 <div className="relative">
                   <div className="aspect-[4/3] overflow-hidden bg-muted">
                     <img
+<<<<<<< HEAD
                       src={deal.image}
                       alt={deal.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+=======
+                      src={deal.image_url || '/placeholder.svg'}
+                      alt={deal.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== '/placeholder.svg') { t.src = '/placeholder.svg'; }}}
+>>>>>>> df4bac4 (third commit)
                     />
                   </div>
                   
                   {/* Badges */}
                   <div className="absolute top-3 left-3 flex flex-col gap-2">
                     <Badge className="bg-red-500 text-white font-bold text-lg px-3 py-1">
+<<<<<<< HEAD
                       -{deal.discount}%
                     </Badge>
                     {deal.isFlashSale && (
+=======
+                       -{deal.discount}%
+                    </Badge>
+                    {deal.is_flash_sale && (
+>>>>>>> df4bac4 (third commit)
                       <Badge className="bg-orange-500 text-white font-semibold flex items-center gap-1">
                         <Flame className="h-3 w-3" />
                         Flash Sale
                       </Badge>
                     )}
+<<<<<<< HEAD
                     {deal.isExclusive && (
+=======
+                    {deal.is_exclusive && (
+>>>>>>> df4bac4 (third commit)
                       <Badge className="bg-gradient-to-r from-accent to-primary text-white font-semibold">
                         <Sparkles className="h-3 w-3 mr-1" />
                         Exclusive
@@ -438,7 +536,11 @@ export default function DealsPage() {
                   <div className="absolute top-3 right-3 bg-black/70 text-white rounded-full px-3 py-1 text-sm">
                     <div className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
+<<<<<<< HEAD
                       {deal.remainingTime}
+=======
+                       {`Valid until ${deal.valid_until}`}
+>>>>>>> df4bac4 (third commit)
                     </div>
                   </div>
                 </div>
@@ -446,12 +548,22 @@ export default function DealsPage() {
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-2">
                     <Badge variant="outline" className="text-primary border-primary/30">
+<<<<<<< HEAD
                       {deal.category}
+=======
+                       {deal.category}
+>>>>>>> df4bac4 (third commit)
                     </Badge>
                     <div className="flex items-center gap-1 text-sm">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                       <span className="font-semibold">{deal.rating}</span>
+<<<<<<< HEAD
                       <span className="text-muted-foreground">({deal.reviewCount.toLocaleString()})</span>
+=======
+                       {typeof deal.review_count === 'number' && (
+                         <span className="text-muted-foreground">({deal.review_count.toLocaleString()})</span>
+                       )}
+>>>>>>> df4bac4 (third commit)
                     </div>
                   </div>
 
@@ -485,10 +597,17 @@ export default function DealsPage() {
                     <div className="flex flex-col">
                       <div className="flex items-baseline gap-2">
                         <span className="text-2xl font-bold text-primary">
+<<<<<<< HEAD
                           ${deal.discountedPrice}
                         </span>
                         <span className="text-lg text-muted-foreground line-through">
                           ${deal.originalPrice}
+=======
+                           ${deal.discounted_price}
+                        </span>
+                        <span className="text-lg text-muted-foreground line-through">
+                           ${deal.original_price}
+>>>>>>> df4bac4 (third commit)
                         </span>
                       </div>
                       <span className="text-sm text-muted-foreground">per person</span>
