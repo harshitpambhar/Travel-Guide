@@ -2,6 +2,7 @@ import { Search, MapPin, Calendar, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { AIPlanner } from "@/components/ui/ai-planner";
 
 export function HeroSearch() {
   return (
@@ -41,12 +42,15 @@ export function HeroSearch() {
           </div>
         </div>
         
-        <Button 
-          size="lg" 
-          className="h-12 px-8 bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300 font-semibold"
-        >
-          Search
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button 
+            size="lg" 
+            className="h-12 px-8 bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300 font-semibold"
+          >
+            Search
+          </Button>
+          <AIPlanner />
+        </div>
       </div>
     </Card>
   );

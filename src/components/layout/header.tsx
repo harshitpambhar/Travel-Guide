@@ -1,41 +1,71 @@
 import { useState } from "react";
-import { Menu, X, Heart, User, Globe, Bell } from "lucide-react";
+import { Menu, X, Heart, User, Globe, Bell, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState({ name: "John Doe", email: "john@example.com" });
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
-    { name: "Experiences", href: "#" },
-    { name: "Hotels", href: "#" },
-    { name: "Flights", href: "#" },
-    { name: "AI Planner", href: "#", isNew: true },
-    { name: "Deals", href: "#" },
-    { name: "VR Preview", href: "#", isNew: true },
+    { name: "Experiences", href: "/experiences" },
+    { name: "Hotels", href: "/hotels" },
+    { name: "Flights", href: "/flights" },
+    { name: "AI Planner", href: "/ai-planner", isNew: true },
+    { name: "Deals", href: "/deals" },
+    { name: "VR Preview", href: "/vr-preview", isNew: true },
   ];
+
+  const handleSignIn = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleSignOut = () => {
+    setIsAuthenticated(false);
+    navigate("/");
+  };
+
+  const isActive = (href: string) => {
+    return location.pathname === href || location.pathname.startsWith(href + "/");
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border/50">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center">
               <span className="text-white font-bold text-xl">W</span>
             </div>
             <span className="font-bold text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-               TravelLook
+              WanderLux
             </span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <div key={item.name} className="relative">
-                <a
-                  href={item.href}
-                  className="text-foreground hover:text-primary transition-colors font-medium flex items-center gap-1"
+                <Link
+                  to={item.href}
+                  className={`transition-colors font-medium flex items-center gap-1 ${
+                    isActive(item.href)
+                      ? "text-primary"
+                      : "text-foreground hover:text-primary"
+                  }`}
                 >
                   {item.name}
                   {item.isNew && (
@@ -43,7 +73,7 @@ export function Header() {
                       New
                     </Badge>
                   )}
-                </a>
+                </Link>
               </div>
             ))}
           </nav>
@@ -57,16 +87,50 @@ export function Header() {
             <Button variant="ghost" size="sm">
               <Bell className="h-4 w-4" />
             </Button>
-            <Button variant="ghost" size="sm">
-              <Heart className="h-4 w-4" />
-            </Button>
-            <Button variant="outline">
-              <User className="h-4 w-4 mr-2" />
-              Sign In
-            </Button>
-            <Button className="bg-gradient-to-r from-primary to-accent">
-              Join Free
-            </Button>
+            <Link to="/wishlist">
+              <Button variant="ghost" size="sm">
+                <Heart className="h-4 w-4" />
+              </Button>
+            </Link>
+            
+            {isAuthenticated ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="gap-2">
+                    <Avatar className="h-6 w-6">
+                      <AvatarImage src="/placeholder.svg" alt={user.name} />
+                      <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <span className="hidden sm:inline">{user.name}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuItem onClick={() => navigate("/profile")}>
+                    <User className="mr-2 h-4 w-4" />
+                    Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/wishlist")}>
+                    <Heart className="mr-2 h-4 w-4" />
+                    Wishlist
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Sign Out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <>
+                <Button variant="outline" onClick={handleSignIn}>
+                  <User className="h-4 w-4 mr-2" />
+                  Sign In
+                </Button>
+                <Button className="bg-gradient-to-r from-primary to-accent">
+                  Join Free
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -84,9 +148,14 @@ export function Header() {
             <nav className="flex flex-col space-y-4">
               {navItems.map((item) => (
                 <div key={item.name} className="flex items-center">
-                  <a
-                    href={item.href}
-                    className="text-foreground hover:text-primary transition-colors font-medium flex items-center gap-1"
+                  <Link
+                    to={item.href}
+                    className={`transition-colors font-medium flex items-center gap-1 ${
+                      isActive(item.href)
+                        ? "text-primary"
+                        : "text-foreground hover:text-primary"
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
                     {item.isNew && (
@@ -94,18 +163,37 @@ export function Header() {
                         New
                       </Badge>
                     )}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </nav>
             <div className="flex flex-col gap-2 mt-6">
-              <Button variant="outline" className="justify-start">
-                <User className="h-4 w-4 mr-2" />
-                Sign In
-              </Button>
-              <Button className="bg-gradient-to-r from-primary to-accent justify-start">
-                Join Free
-              </Button>
+              {isAuthenticated ? (
+                <>
+                  <Button variant="outline" className="justify-start" onClick={() => navigate("/profile")}>
+                    <User className="h-4 w-4 mr-2" />
+                    Profile
+                  </Button>
+                  <Button variant="outline" className="justify-start" onClick={() => navigate("/wishlist")}>
+                    <Heart className="h-4 w-4 mr-2" />
+                    Wishlist
+                  </Button>
+                  <Button variant="outline" className="justify-start" onClick={handleSignOut}>
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" className="justify-start" onClick={handleSignIn}>
+                    <User className="h-4 w-4 mr-2" />
+                    Sign In
+                  </Button>
+                  <Button className="bg-gradient-to-r from-primary to-accent justify-start">
+                    Join Free
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}

@@ -50,7 +50,7 @@ export function ExperienceCard({
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {isExclusive && (
             <Badge className="bg-gradient-to-r from-accent to-primary text-white font-semibold">
-              TravelLook Exclusive
+              WanderLux Exclusive
             </Badge>
           )}
           {isPopular && (

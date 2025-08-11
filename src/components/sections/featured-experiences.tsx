@@ -21,7 +21,7 @@ const featuredExperiences = [
   },
   {
     id: "2",
-    title: "TravelLook AI City Pass - Singapore",
+    title: "WanderLux AI City Pass - Singapore",
     location: "Singapore",
     image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=600&h=400&fit=crop",
     rating: 4.7,
