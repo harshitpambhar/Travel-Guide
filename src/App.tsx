@@ -16,6 +16,8 @@ import SearchResultsPage from "@/pages/SearchResults";
 import UserProfilePage from "@/pages/UserProfile";
 import BookingPage from "@/pages/Booking";
 import WishlistPage from "@/pages/Wishlist";
+import PackagesPage from "@/pages/Packages";
+import PackageDetailPage from "@/pages/PackageDetail";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +35,8 @@ const App = () => (
           <Route path="/flights" element={<FlightsPage />} />
           <Route path="/hotels" element={<HotelPage />} />
           <Route path="/deals" element={<DealsPage />} />
+          <Route path="/packages" element={<PackagesPage />} />
+          <Route path="/packages/:id" element={<PackageDetailPage />} />
           <Route path="/vr-preview" element={<VRPreviewPage />} />
           <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/profile" element={<UserProfilePage />} />

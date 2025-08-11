@@ -22,6 +22,7 @@ export function Header() {
   const navItems = [
     { name: "Experiences", href: "/experiences" },
     { name: "Hotels", href: "/hotels" },
+    { name: "Packages", href: "/packages", isNew: true },
     { name: "Flights", href: "/flights" },
     { name: "AI Planner", href: "/ai-planner", isNew: true },
     { name: "Deals", href: "/deals" },
