@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useState } from "react";
+=======
+import { useEffect, useMemo, useState } from "react";
+>>>>>>> df4bac4 (third commit)
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/layout/header";
 import { HotelFinder } from "@/components/ui/hotel-finder";
@@ -28,6 +32,7 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
+<<<<<<< HEAD
 
 // Mock hotel data
 export const hotels = [
@@ -116,6 +121,26 @@ export const hotels = [
     isExclusive: true
   }
 ];
+=======
+import { hotelService } from "@/services/hotelService";
+import type { HotelWithRelations } from "@/types/hotel";
+
+// Data from Supabase
+type UIHotel = {
+  id: string;
+  name: string;
+  location: string;
+  image: string;
+  rating: number;
+  reviewCount: number;
+  price: number;
+  originalPrice?: number;
+  amenities: string[];
+  stars: number;
+  isPopular: boolean;
+  isExclusive: boolean;
+};
+>>>>>>> df4bac4 (third commit)
 
 const amenities = [
   { id: "Wifi", label: "Wifi", icon: Wifi },
@@ -140,6 +165,47 @@ export default function HotelsPage() {
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("popularity");
+<<<<<<< HEAD
+=======
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [hotels, setHotels] = useState<UIHotel[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        setLoading(true);
+        const data = await hotelService.getHotels();
+        if (!mounted) return;
+        // Map to UI model; database lacks images/amenities/stars, so fill with defaults
+        const mapped: UIHotel[] = (data || []).map((h) => ({
+          id: h.id || crypto.randomUUID(),
+          name: h.name,
+          location: h.location || (h.city ? `${h.city.name}, ${h.city.country?.name ?? ''}` : ''),
+          image: h.image_url || "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+          rating: h.rating ?? 4.5,
+          reviewCount: 1000,
+          price: Number(h.price ?? 0),
+          originalPrice: undefined,
+          amenities: ["Wifi", "Pool"],
+          stars: Math.max(3, Math.min(5, Math.round((h.rating ?? 4.5)))),
+          isPopular: (h.rating ?? 0) >= 4.7,
+          isExclusive: (h.rating ?? 0) >= 4.85,
+        }));
+        setHotels(mapped);
+        setError(null);
+      } catch (e: any) {
+        setError(e.message || 'Failed to load hotels');
+      } finally {
+        setLoading(false);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+>>>>>>> df4bac4 (third commit)
 
   const filteredHotels = hotels.filter(hotel => {
     const matchesSearch = hotel.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -297,7 +363,11 @@ export default function HotelsPage() {
           {/* Results */}
           <div className="mb-6">
             <p className="text-muted-foreground">
+<<<<<<< HEAD
               Showing {sortedHotels.length} of {hotels.length} hotels
+=======
+              {loading ? 'Loading hotels…' : error ? `Error: ${error}` : `Showing ${sortedHotels.length} of ${hotels.length} hotels`}
+>>>>>>> df4bac4 (third commit)
             </p>
           </div>
 
@@ -315,6 +385,15 @@ export default function HotelsPage() {
                       src={hotel.image}
                       alt={hotel.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+<<<<<<< HEAD
+=======
+                      onError={(e) => {
+                        const target = e.currentTarget as HTMLImageElement;
+                        if (target.src !== '/placeholder.svg') {
+                          target.src = '/placeholder.svg';
+                        }
+                      }}
+>>>>>>> df4bac4 (third commit)
                     />
                   </div>
                   
