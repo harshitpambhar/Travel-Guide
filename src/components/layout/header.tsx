@@ -132,10 +132,6 @@ export function Header() {
                       <Heart className="mr-2 h-4 w-4" />
                       Wishlist
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/admin")}>
-                      <Globe className="mr-2 h-4 w-4" />
-                      Admin Panel
-                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={handleSignOut}>
                       <LogOut className="mr-2 h-4 w-4" />
@@ -157,26 +153,6 @@ export function Header() {
                     Sign Up
                   </Button>
                 </Link>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="border-orange-200 text-orange-700 hover:bg-orange-50">
-                      <Globe className="h-4 w-4 mr-2" />
-                      Admin
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuItem onClick={() => navigate("/admin")}>Dashboard</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/admin/users")}>Users</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/admin/hotels")}>Hotels</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/admin/experiences")}>Experiences</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/admin/packages")}>Packages</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/admin/flights")}>Flights</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/admin/bookings")}>Bookings</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/admin/reviews")}>Reviews</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/admin/analytics")}>Analytics</DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/admin/profile")}>Profile/Settings</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </>
             )}
           </div>
