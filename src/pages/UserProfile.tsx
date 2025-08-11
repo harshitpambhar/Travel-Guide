@@ -127,7 +127,7 @@ export default function UserProfilePage() {
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="relative">
                     <Avatar className="h-24 w-24">
-                      <AvatarImage src={user.avatar} alt={user.name} />
+                      <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.svg"; }} />
                       <AvatarFallback className="text-2xl">{user.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <Button size="sm" className="absolute -bottom-2 -right-2 h-8 w-8 p-0">

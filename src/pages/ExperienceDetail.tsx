@@ -339,7 +339,7 @@ export default function ExperienceDetailPage() {
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
                     <Avatar className="h-16 w-16">
-                      <AvatarImage src={experienceData.host.avatar} alt={experienceData.host.name} />
+                      <AvatarImage src={experienceData.host.avatar || "/placeholder.svg"} alt={experienceData.host.name} onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.svg"; }} />
                       <AvatarFallback>{experienceData.host.name.charAt(0)}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
@@ -382,7 +382,7 @@ export default function ExperienceDetailPage() {
                       <CardContent className="p-4">
                         <div className="flex items-start gap-4">
                           <Avatar>
-                            <AvatarImage src={review.avatar} alt={review.user} />
+                            <AvatarImage src={review.avatar || "/placeholder.svg"} alt={review.user} onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.svg"; }} />
                             <AvatarFallback>{review.user.charAt(0)}</AvatarFallback>
                           </Avatar>
                           <div className="flex-1">

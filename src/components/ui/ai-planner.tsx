@@ -914,9 +914,7 @@ export function AdminReviewPanel() {
                     src={selectedContribution.imageUrl} 
                     alt={selectedContribution.name}
                     className="w-full max-w-md h-auto rounded-lg border"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                    }}
+                    onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.svg"; }}
                   />
                 </div>
               )}

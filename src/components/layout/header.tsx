@@ -87,13 +87,63 @@ export function Header() {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-3">
-            <Button variant="ghost" size="sm" className="gap-2">
-              <Globe className="h-4 w-4" />
-              EN
-            </Button>
-            <Button variant="ghost" size="sm">
-              <Bell className="h-4 w-4" />
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  <Bell className="h-4 w-4" />
+                  <span className="sr-only">Notifications</span>
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs px-1.5 py-0.5">3</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80">
+                <div className="px-4 py-2 font-semibold text-lg border-b border-border/50">Notifications</div>
+                {isAuthenticated && user.name ? (
+                  <>
+                    <DropdownMenuItem>
+                      <div>
+                        <div className="font-medium">Hi {user.name}, your booking is confirmed!</div>
+                        <div className="text-xs text-muted-foreground">Just now</div>
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <div>
+                        <div className="font-medium">You have a new message from support</div>
+                        <div className="text-xs text-muted-foreground">5 minutes ago</div>
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <div>
+                        <div className="font-medium">Your review was approved</div>
+                        <div className="text-xs text-muted-foreground">1 hour ago</div>
+                      </div>
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuItem>
+                      <div>
+                        <div className="font-medium">Welcome to TravelGuide! Sign up for personalized updates.</div>
+                        <div className="text-xs text-muted-foreground">Today</div>
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <div>
+                        <div className="font-medium">Check out our new summer deals!</div>
+                        <div className="text-xs text-muted-foreground">2 days ago</div>
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <div>
+                        <div className="font-medium">Explore trending destinations for 2025</div>
+                        <div className="text-xs text-muted-foreground">This week</div>
+                      </div>
+                    </DropdownMenuItem>
+                  </>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="justify-center text-primary cursor-pointer" onClick={() => navigate('/admin/notifications')}>View all notifications</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Link to="/wishlist">
               <Button variant="ghost" size="sm">
                 <Heart className="h-4 w-4" />
@@ -110,7 +160,7 @@ export function Header() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="gap-2">
                       <Avatar className="h-6 w-6">
-                        <AvatarImage src="/placeholder.svg" alt={user.name} />
+                        <AvatarImage src="/placeholder.svg" alt={user.name} onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.svg"; }} />
                         <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                       </Avatar>
                       <span className="hidden sm:inline">{user.name}</span>

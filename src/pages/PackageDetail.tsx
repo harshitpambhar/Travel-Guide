@@ -86,7 +86,7 @@ export default function PackageDetailPage() {
                         {pkg.images.map((src, i) => (
                           <CarouselItem key={i}>
                             <div className="aspect-[16/9] bg-muted overflow-hidden">
-                              <img src={src} alt={`${pkg.name} ${i + 1}`} className="w-full h-full object-cover" />
+                              <img src={src} alt={`${pkg.name} ${i + 1}`} className="w-full h-full object-cover" onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.svg"; }} />
                             </div>
                           </CarouselItem>
                         ))}

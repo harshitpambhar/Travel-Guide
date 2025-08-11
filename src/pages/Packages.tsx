@@ -137,7 +137,7 @@ export default function PackagesPage() {
             {sorted.map((pkg, index) => (
               <Card key={pkg.id} className="overflow-hidden group bg-white border-0 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-fade-in" style={{ animationDelay: `${index * 0.06}s` }}>
                 <div className="aspect-[4/3] overflow-hidden bg-muted">
-                  <img src={pkg.images[0]} alt={pkg.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img src={pkg.images[0]} alt={pkg.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onError={e => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.svg"; }} />
                 </div>
                 <CardContent className="p-4 space-y-3">
                   <div className="flex items-center justify-between">
