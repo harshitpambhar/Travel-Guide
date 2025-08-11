@@ -30,7 +30,7 @@ const experiences = [
     id: "1",
     title: "Universal Studios Singapore Adventure",
     location: "Sentosa Island, Singapore",
-    image: "https://images.unsplash.com/photo-1613767969829-3b5dda3fd227?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1753588296403-be438eb432e5?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?w=600&h=400&fit=crop",
     rating: 4.8,
     reviewCount: 104219,
     price: 58.95,
@@ -89,7 +89,7 @@ const experiences = [
     id: "5",
     title: "Eco-Friendly Costa Rica Canopy Tour",
     location: "Monteverde, Costa Rica",
-    image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=600&h=400&fit=crop",
+    image: "https://plus.unsplash.com/premium_photo-1720760946886-286458e746ba?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQyfEZ6bzN6dU9ITjZ3fHxlbnwwfHx8fHw%3D?w=600&h=400&fit=crop",
     rating: 4.6,
     reviewCount: 3421,
     price: 45.00,
@@ -103,7 +103,7 @@ const experiences = [
     id: "6",
     title: "Santorini Sunset Sailing with Dinner",
     location: "Santorini, Greece",
-    image: "https://images.unsplash.com/photo-1469796466635-681d485cbeb0?w=600&h=400&fit=crop",
+    image: "https://images.unsplash.com/photo-1750375502807-2c73a829f182?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?w=600&h=400&fit=crop",
     rating: 4.8,
     reviewCount: 15234,
     price: 120.00,
@@ -142,6 +142,63 @@ const experiences = [
     bookedCount: "30K+",
     isPopular: false,
     isExclusive: false
+  },
+  {
+    id: "9",
+    title: "Dubai Desert Safari & BBQ Dinner",
+    location: "Dubai, UAE",
+    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&h=400&fit=crop",
+    rating: 4.8,
+    reviewCount: 23456,
+    price: 75.00,
+    originalPrice: 89.00,
+    category: "Desert Tours",
+    features: ["Camel Ride", "Traditional BBQ", "Sunset Views"],
+    bookedCount: "180K+",
+    isPopular: true,
+    isExclusive: false
+  },
+  {
+    id: "10",
+    title: "Swiss Alps Hiking Adventure",
+    location: "Interlaken, Switzerland",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
+    rating: 4.9,
+    reviewCount: 12345,
+    price: 150.00,
+    category: "Hiking",
+    features: ["Mountain Guide", "Equipment Rental", "Lunch Included"],
+    bookedCount: "95K+",
+    isPopular: false,
+    isExclusive: true
+  },
+  {
+    id: "11",
+    title: "New York City Helicopter Tour",
+    location: "Manhattan, New York",
+    image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=600&h=400&fit=crop",
+    rating: 4.7,
+    reviewCount: 8765,
+    price: 250.00,
+    category: "Helicopter Tours",
+    features: ["Skyline Views", "Professional Pilot", "Photo Opportunities"],
+    bookedCount: "65K+",
+    isPopular: true,
+    isExclusive: false
+  },
+  {
+    id: "12",
+    title: "Australian Great Barrier Reef Dive",
+    location: "Cairns, Australia",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
+    rating: 4.9,
+    reviewCount: 15678,
+    price: 180.00,
+    category: "Scuba Diving",
+    features: ["Certified Instructor", "Equipment Provided", "Marine Life Guide"],
+    bookedCount: "110K+",
+    isPopular: true,
+    isExclusive: false
   }
 ];
 
@@ -154,7 +211,11 @@ const categories = [
   "Eco Adventures",
   "Cruises",
   "Adventure",
-  "Photography"
+  "Photography",
+  "Desert Tours",
+  "Hiking",
+  "Helicopter Tours",
+  "Scuba Diving"
 ];
 
 const locations = [
@@ -165,7 +226,11 @@ const locations = [
   "Costa Rica",
   "Greece",
   "Peru",
-  "Iceland"
+  "Iceland",
+  "Dubai",
+  "Switzerland",
+  "New York",
+  "Australia"
 ];
 
 export default function ExperiencesPage() {

@@ -92,6 +92,49 @@ const featuredExperiences = [
     bookedCount: "200K+",
     isPopular: true,
     isExclusive: false
+  },
+  {
+    id: "7",
+    title: "Dubai Desert Safari & BBQ Dinner",
+    location: "Dubai, UAE",
+    image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&h=400&fit=crop",
+    rating: 4.8,
+    reviewCount: 23456,
+    price: 75.00,
+    originalPrice: 89.00,
+    category: "Desert Tours",
+    features: ["Camel Ride", "Traditional BBQ", "Sunset Views"],
+    bookedCount: "180K+",
+    isPopular: true,
+    isExclusive: false
+  },
+  {
+    id: "8",
+    title: "Swiss Alps Hiking Adventure",
+    location: "Interlaken, Switzerland",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
+    rating: 4.9,
+    reviewCount: 12345,
+    price: 150.00,
+    category: "Hiking",
+    features: ["Mountain Guide", "Equipment Rental", "Lunch Included"],
+    bookedCount: "95K+",
+    isPopular: false,
+    isExclusive: true
+  },
+  {
+    id: "9",
+    title: "New York City Helicopter Tour",
+    location: "Manhattan, New York",
+    image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=600&h=400&fit=crop",
+    rating: 4.7,
+    reviewCount: 8765,
+    price: 250.00,
+    category: "Helicopter Tours",
+    features: ["Skyline Views", "Professional Pilot", "Photo Opportunities"],
+    bookedCount: "65K+",
+    isPopular: true,
+    isExclusive: false
   }
 ];
 
