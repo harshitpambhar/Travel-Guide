@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const signInSchema = z.object({
   email: z.string().email("Enter a valid email"),
@@ -21,6 +21,7 @@ const signInSchema = z.object({
 
 const SignIn = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -34,6 +35,32 @@ const SignIn = () => {
     });
     // Replace with real authentication logic
     console.log("Signed in:", values);
+    
+    // Get user data from signup or use default
+    let userData;
+    const signupData = localStorage.getItem('signupUserData');
+    
+    if (signupData) {
+      // Use the data from signup
+      userData = JSON.parse(signupData);
+      localStorage.removeItem('signupUserData'); // Clean up signup data
+    } else {
+      // Use default data (for demo purposes)
+      userData = { 
+        name: 'John Doe', 
+        email: values.email,
+        type: 'user'
+      };
+    }
+    
+    // Set authentication state to true (this would typically be done through context or state management)
+    // For now, we'll use localStorage to persist the login state
+    localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem('user', JSON.stringify(userData));
+    
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
   };
 
   return (

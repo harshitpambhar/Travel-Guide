@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X, Heart, User, Globe, Bell, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -19,6 +19,19 @@ export function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Check localStorage on component mount
+  useEffect(() => {
+    const authStatus = localStorage.getItem('isAuthenticated');
+    const userData = localStorage.getItem('user');
+    
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
+      if (userData) {
+        setUser(JSON.parse(userData));
+      }
+    }
+  }, []);
+
   const navItems = [
     { name: "Experiences", href: "/experiences" },
     { name: "Hotels", href: "/hotels" },
@@ -29,13 +42,11 @@ export function Header() {
     { name: "VR Preview", href: "/vr-preview", isNew: true },
   ];
 
-  const handleSignIn = () => {
-    setIsAuthenticated(true);
-  };
-
   const handleSignOut = () => {
     setIsAuthenticated(false);
-    navigate("/");
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('user');
+    navigate("/signin");
   };
 
   const isActive = (href: string) => {
@@ -73,36 +84,49 @@ export function Header() {
             </Link>
             
             {isAuthenticated ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="gap-2">
-                    <Avatar className="h-6 w-6">
-                      <AvatarImage src="/placeholder.svg" alt={user.name} />
-                      <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <span className="hidden sm:inline">{user.name}</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuItem onClick={() => navigate("/profile")}>
-                    <User className="mr-2 h-4 w-4" />
-                    Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate("/wishlist")}>
-                    <Heart className="mr-2 h-4 w-4" />
-                    Wishlist
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate("/admin")}>
-                    <Globe className="mr-2 h-4 w-4" />
-                    Admin Panel
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleSignOut}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    Sign Out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <>
+                <Button variant="outline" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Logout
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="gap-2">
+                      <Avatar className="h-6 w-6">
+                        <AvatarImage src="/placeholder.svg" alt={user.name} />
+                        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <span className="hidden sm:inline">{user.name}</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <div className="px-2 py-1.5 text-sm text-muted-foreground border-b border-border/50 mb-2">
+                      <div className="font-medium text-foreground">{user.name}</div>
+                      <div className="text-xs">{user.email}</div>
+                      {user.type && (
+                        <div className="text-xs text-primary capitalize">{user.type}</div>
+                      )}
+                    </div>
+                    <DropdownMenuItem onClick={() => navigate("/profile")}>
+                      <User className="mr-2 h-4 w-4" />
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/wishlist")}>
+                      <Heart className="mr-2 h-4 w-4" />
+                      Wishlist
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/admin")}>
+                      <Globe className="mr-2 h-4 w-4" />
+                      Admin Panel
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
             ) : (
               <>
                 <Link to="/signin">
@@ -216,7 +240,7 @@ export function Header() {
                   </Button>
                   <Button variant="outline" className="justify-start" onClick={handleSignOut}>
                     <LogOut className="h-4 w-4 mr-2" />
-                    Sign Out
+                    Logout
                   </Button>
                 </>
               ) : (

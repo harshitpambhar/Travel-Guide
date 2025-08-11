@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const userSchema = z
   .object({
@@ -46,6 +46,7 @@ export type Mode = "user" | "admin";
 const SignUp = () => {
   const [mode, setMode] = useState<Mode>("user");
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const schema = useMemo(() => (mode === "user" ? userSchema : adminSchema), [mode]);
 
@@ -61,6 +62,18 @@ const SignUp = () => {
     });
     // Replace with real submission logic
     console.log("Submitted:", values);
+    
+    // Store user data in localStorage for the upcoming login
+    const userData = {
+      name: mode === "user" ? values.name : values.adminName,
+      email: values.email,
+      type: mode
+    };
+    localStorage.setItem('signupUserData', JSON.stringify(userData));
+    
+    setTimeout(() => {
+      navigate("/signin");
+    }, 1000);
   };
 
   return (
