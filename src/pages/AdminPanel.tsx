@@ -10,18 +10,109 @@ import {
   Star, 
   TrendingUp,
   Globe,
-  Settings
+  Settings,
+  Shield,
+  AlertTriangle
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminPanel() {
+  const [user, setUser] = useState({ name: "", email: "", type: "" });
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is authenticated and is an admin
+    const authStatus = localStorage.getItem('isAuthenticated');
+    const userData = localStorage.getItem('user');
+    
+    if (authStatus === 'true' && userData) {
+      try {
+        const parsedUser = JSON.parse(userData);
+        if (parsedUser.type === 'admin') {
+          setUser(parsedUser);
+        } else {
+          // User is not an admin, redirect to homepage
+          navigate('/');
+          return;
+        }
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        navigate('/');
+        return;
+      }
+    } else {
+      // User is not authenticated, redirect to signin
+      navigate('/signin');
+      return;
+    }
+    
+    setIsLoading(false);
+  }, [navigate]);
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <main className="pt-24 pb-10">
+          <div className="container mx-auto px-4">
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Loading admin panel...</p>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // Access denied component for non-admin users
+  if (user.type !== 'admin') {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <main className="pt-24 pb-10">
+          <div className="container mx-auto px-4">
+            <div className="max-w-2xl mx-auto text-center">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-8">
+                <AlertTriangle className="h-16 w-16 text-red-500 mx-auto mb-4" />
+                <h1 className="text-3xl font-bold text-red-700 mb-4">Access Denied</h1>
+                <p className="text-red-600 mb-6">
+                  You do not have administrator privileges to access this page.
+                </p>
+                <Button onClick={() => navigate('/')}>
+                  Return to Homepage
+                </Button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       <main className="pt-24 pb-10">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Admin Panel
-          </h1>
+          {/* Admin Header with User Info */}
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Admin Panel
+              </h1>
+              <p className="text-muted-foreground">
+                Welcome back, <span className="font-semibold text-foreground">{user.name}</span> 
+                <span className="ml-2 inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full">
+                  <Shield className="h-3 w-3" />
+                  Administrator
+                </span>
+              </p>
+            </div>
+          </div>
           
           {/* Dashboard Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-10">

@@ -1,126 +1,199 @@
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from "@/components/ui/card";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft, Home } from "lucide-react";
 
 const signInSchema = z.object({
-  email: z.string().email("Enter a valid email"),
+  email: z.string().email("Please enter a valid email address"),
   password: z.string().min(1, "Password is required"),
 });
 
-const SignIn = () => {
+type SignInFormData = z.infer<typeof signInSchema>;
+
+export default function SignIn() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const form = useForm<z.infer<typeof signInSchema>>({
+  const form = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
-    mode: "onBlur",
+    defaultValues: {
+      email: "",
+      password: ""
+    }
   });
 
-  const onSubmit = (values: z.infer<typeof signInSchema>) => {
-    toast({
-      title: "Signed in successfully",
-      description: "Welcome back!",
-    });
-    // Replace with real authentication logic
-    console.log("Signed in:", values);
+  const onSubmit = async (values: SignInFormData) => {
+    setIsSubmitting(true);
     
-    // Get user data from signup or use email-based data
-    let userData;
-    const signupData = localStorage.getItem('signupUserData');
-    
-    if (signupData) {
-      // Use the data from signup (this should have the actual name)
-      userData = JSON.parse(signupData);
-      localStorage.removeItem('signupUserData'); // Clean up signup data
-    } else {
-      // If no signup data exists, this means user is logging in without signing up first
-      // In a real app, this would query the database for existing user info
-      // For demo purposes, we'll show a message that they need to sign up first
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Check if user exists in signupUserData (regular users)
+      const signupUserData = localStorage.getItem('signupUserData');
+      let userData = null;
+      
+      if (signupUserData) {
+        try {
+          const parsedData = JSON.parse(signupUserData);
+          if (parsedData.email === values.email && parsedData.password === values.password) {
+            userData = parsedData;
+          }
+        } catch (error) {
+          console.error('Error parsing signup data:', error);
+        }
+      }
+      
+      // Check if admin exists (pre-defined admin accounts + development accounts)
+      const adminAccounts = [
+        {
+          id: "admin_001",
+          name: "Admin User",
+          email: "admin@globetrotter.com",
+          password: "admin123",
+          type: "admin",
+          phone: "+1 (555) 123-4567"
+        },
+        {
+          id: "admin_002", 
+          name: "Super Admin",
+          email: "superadmin@globetrotter.com",
+          password: "super123",
+          type: "admin",
+          phone: "+1 (555) 987-6543"
+        }
+      ];
+      
+      // Check for development-created admin accounts
+      const devAdminAccounts = JSON.parse(localStorage.getItem('adminAccounts') || '[]');
+      const allAdminAccounts = [...adminAccounts, ...devAdminAccounts];
+      
+      const adminAccount = allAdminAccounts.find(
+        admin => admin.email === values.email && admin.password === values.password
+      );
+      
+      if (adminAccount) {
+        userData = adminAccount;
+      }
+      
+      if (!userData) {
+        toast({
+          title: "Invalid credentials",
+          description: "Please check your email and password and try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      // Set authentication status and user data
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('user', JSON.stringify({
+        id: userData.id,
+        name: userData.name,
+        email: userData.email,
+        type: userData.type,
+        phone: userData.phone
+      }));
+      
       toast({
-        title: "Account not found",
-        description: "Please sign up first to create an account.",
-        variant: "destructive"
+        title: "Welcome back!",
+        description: `Successfully signed in as ${userData.name}`,
       });
-      return;
+      
+      // Redirect based on user type
+      if (userData.type === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
+      
+    } catch (error) {
+      toast({
+        title: "Error signing in",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    // Set authentication state to true (this would typically be done through context or state management)
-    // For now, we'll use localStorage to persist the login state
-    localStorage.setItem('isAuthenticated', 'true');
-    localStorage.setItem('user', JSON.stringify(userData));
-    
-    setTimeout(() => {
-      navigate("/");
-    }, 1000);
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-6 sm:p-10">
-      <Card className="w-full max-w-md shadow-lg">
-        <CardHeader className="space-y-6">
-          <header className="text-center space-y-1">
-            <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
-            <CardDescription>
-              Sign in to your account to continue
-            </CardDescription>
-          </header>
-        </CardHeader>
-
-        <CardContent>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input 
-                id="email" 
-                type="email" 
-                placeholder="you@example.com" 
-                {...form.register("email")} 
-                aria-invalid={!!form.formState.errors.email} 
-              />
-              {form.formState.errors.email && (
-                <p className="text-destructive text-sm">{String(form.formState.errors.email.message)}</p>
-              )}
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <Card className="shadow-lg">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl font-bold">Sign In</CardTitle>
+            <p className="text-muted-foreground">Welcome back to GlobeTrotter</p>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between mb-6">
+              <Button variant="outline" size="sm" asChild>
+                <Link to="/">
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back to Home
+                </Link>
+              </Button>
             </div>
-
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input 
-                id="password" 
-                type="password" 
-                placeholder="••••••••" 
-                {...form.register("password")} 
-                aria-invalid={!!form.formState.errors.password} 
-              />
-              {form.formState.errors.password && (
-                <p className="text-destructive text-sm">{String(form.formState.errors.password.message)}</p>
-              )}
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <div className="grid gap-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  {...form.register("email")}
+                />
+                {form.formState.errors.email && (
+                  <p className="text-sm text-red-600">
+                    {form.formState.errors.email.message}
+                  </p>
+                )}
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  {...form.register("password")}
+                />
+                {form.formState.errors.password && (
+                  <p className="text-sm text-red-600">
+                    {form.formState.errors.password.message}
+                  </p>
+                )}
+              </div>
+              <Button 
+                type="submit" 
+                className="w-full" 
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Signing In..." : "Sign In"}
+              </Button>
+            </form>
+            <div className="mt-6 text-center text-sm">
+              <p className="text-muted-foreground mb-2">
+                Don't have an account?{" "}
+                <Link to="/signup" className="text-primary hover:underline font-medium">
+                  Sign up here
+                </Link>
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Admin accounts are pre-configured and cannot be created through signup
+              </p>
             </div>
-
-            <Button type="submit" className="w-full">Sign In</Button>
-            
-            <div className="text-center text-sm">
-              <span className="text-muted-foreground">Don't have an account? </span>
-              <Link to="/signup" className="text-primary hover:underline">
-                Sign up
-              </Link>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
-    </main>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
-};
-
-export default SignIn;
+}

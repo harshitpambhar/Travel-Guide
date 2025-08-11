@@ -15,7 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState({ name: "", email: "" });
+  const [user, setUser] = useState({ name: "", email: "", type: "" });
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,14 +25,26 @@ export function Header() {
     const authStatus = localStorage.getItem('isAuthenticated');
     const userData = localStorage.getItem('user');
     
-    if (authStatus === 'true') {
-      setIsAuthenticated(true);
-      if (userData) {
-        setUser(JSON.parse(userData));
+    if (authStatus === 'true' && userData) {
+      try {
+        const parsedUser = JSON.parse(userData);
+        setIsAuthenticated(true);
+        setUser({
+          name: parsedUser.name || "",
+          email: parsedUser.email || "",
+          type: parsedUser.type || ""
+        });
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        setIsAuthenticated(false);
+        setUser({ name: "", email: "", type: "" });
       }
+    } else {
+      setIsAuthenticated(false);
+      setUser({ name: "", email: "", type: "" });
     }
     setIsLoading(false);
-  }, []);
+  }, [location.pathname]);
 
   const navItems = [
     { name: "Experiences", href: "/experiences" },
@@ -43,6 +55,8 @@ export function Header() {
     { name: "Deals", href: "/deals" },
     { name: "VR Preview", href: "/vr-preview", isNew: true },
     { name: "Submit Location", href: "/submit-location", isNew: true },
+    // Conditionally add admin panel for admin users
+    ...(user.type === 'admin' ? [{ name: "Admin Panel", href: "/admin", isAdmin: true }] : []),
   ];
 
   const handleSignOut = () => {
@@ -53,7 +67,7 @@ export function Header() {
   };
 
   const isActive = (href: string) => {
-    return location.pathname === href || location.pathname.startsWith(href + "/");
+    return location.pathname === href;
   };
 
   return (
@@ -193,6 +207,11 @@ export function Header() {
                   {item.isNew && (
                     <Badge className="ml-1 text-xs px-1 py-0 h-4 bg-accent text-white">
                       New
+                    </Badge>
+                  )}
+                  {item.isAdmin && (
+                    <Badge className="ml-1 text-xs px-1 py-0 h-4 bg-purple-600 text-white">
+                      Admin
                     </Badge>
                   )}
                 </Link>
