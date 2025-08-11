@@ -1,5 +1,6 @@
 import { ExperienceCard } from "@/components/ui/experience-card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 // Mock data for featured experiences
@@ -125,11 +126,12 @@ export function FeaturedExperiences() {
         </div>
 
         <div className="text-center mt-12">
-          <Button 
-            size="lg" 
+          <Button
+            asChild
+            size="lg"
             className="bg-gradient-to-r from-primary to-accent hover:shadow-xl transition-all duration-300 px-8"
           >
-            Discover More Experiences
+            <Link to="/experiences">Discover More Experiences</Link>
           </Button>
         </div>
       </div>

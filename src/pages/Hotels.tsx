@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/layout/header";
 import { HotelFinder } from "@/components/ui/hotel-finder";
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,7 @@ import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 
 // Mock hotel data
-const hotels = [
+export const hotels = [
   {
     id: "1",
     name: "Marina Bay Sands",
@@ -117,17 +118,22 @@ const hotels = [
 ];
 
 const amenities = [
-  { id: "wifi", label: "Free WiFi", icon: Wifi },
-  { id: "pool", label: "Swimming Pool", icon: Waves },
-  { id: "gym", label: "Fitness Center", icon: Dumbbell },
-  { id: "restaurant", label: "Restaurant", icon: Utensils },
-  { id: "parking", label: "Free Parking", icon: Car },
-  { id: "spa", label: "Spa & Wellness", icon: Waves },
+  { id: "Wifi", label: "Wifi", icon: Wifi },
+  { id: "Pool", label: "Pool", icon: Waves },
+  { id: "Gym", label: "Gym", icon: Dumbbell },
+  { id: "Restaurant", label: "Restaurant", icon: Utensils },
+  { id: "Parking", label: "Parking", icon: Car },
+  { id: "Spa", label: "Spa", icon: Waves },
+  { id: "Butler", label: "Butler", icon: Users },
+  { id: "Tennis", label: "Tennis", icon: Users },
+  { id: "Concierge", label: "Concierge", icon: Users },
+  { id: "Bar", label: "Bar", icon: Users },
 ];
 
 const starRatings = [1, 2, 3, 4, 5];
 
 export default function HotelsPage() {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedStars, setSelectedStars] = useState<number[]>([]);
   const [priceRange, setPriceRange] = useState([0, 1000]);
@@ -360,16 +366,11 @@ export default function HotelsPage() {
                   </p>
 
                   <div className="flex flex-wrap gap-1 mb-4">
-                    {hotel.amenities.slice(0, 3).map((amenity, index) => (
+                    {hotel.amenities.map((amenity, index) => (
                       <Badge key={index} variant="secondary" className="text-xs bg-secondary/60">
                         {amenity}
                       </Badge>
                     ))}
-                    {hotel.amenities.length > 3 && (
-                      <Badge variant="secondary" className="text-xs bg-secondary/60">
-                        +{hotel.amenities.length - 3} more
-                      </Badge>
-                    )}
                   </div>
 
                   <div className="flex items-end justify-between">
@@ -387,7 +388,10 @@ export default function HotelsPage() {
                       <span className="text-sm text-muted-foreground">per night</span>
                     </div>
                     
-                    <Button className="bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300">
+                    <Button
+                      onClick={() => navigate(`/booking/${hotel.id}`)}
+                      className="bg-gradient-to-r from-primary to-accent hover:shadow-lg transition-all duration-300"
+                    >
                       Book Now
                     </Button>
                   </div>

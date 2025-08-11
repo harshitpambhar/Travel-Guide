@@ -24,7 +24,7 @@ export function Header() {
     { name: "Hotels", href: "/hotels" },
     { name: "Packages", href: "/packages", isNew: true },
     { name: "Flights", href: "/flights" },
-    { name: "AI Planner", href: "/ai-planner", isNew: true },
+    { name: "Nearby Places", href: "/ai-planner", isNew: true },
     { name: "Deals", href: "/deals" },
     { name: "VR Preview", href: "/vr-preview", isNew: true },
   ];
@@ -52,7 +52,7 @@ export function Header() {
               <span className="text-white font-bold text-xl">W</span>
             </div>
             <span className="font-bold text-xl bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              WanderLux
+              TravelGuide
             </span>
           </Link>
 
@@ -113,6 +113,10 @@ export function Header() {
                   <DropdownMenuItem onClick={() => navigate("/wishlist")}>
                     <Heart className="mr-2 h-4 w-4" />
                     Wishlist
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/admin")}>
+                    <Globe className="mr-2 h-4 w-4" />
+                    Admin Panel
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut}>
@@ -178,6 +182,10 @@ export function Header() {
                   <Button variant="outline" className="justify-start" onClick={() => navigate("/wishlist")}>
                     <Heart className="h-4 w-4 mr-2" />
                     Wishlist
+                  </Button>
+                  <Button variant="outline" className="justify-start" onClick={() => navigate("/admin")}>
+                    <Globe className="h-4 w-4 mr-2" />
+                    Admin Panel
                   </Button>
                   <Button variant="outline" className="justify-start" onClick={handleSignOut}>
                     <LogOut className="h-4 w-4 mr-2" />

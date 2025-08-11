@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { hotels } from "./Hotels";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ import {
 
 export default function BookingPage() {
   const { id } = useParams();
+  const hotel = hotels.find(h => h.id === id);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   
@@ -34,7 +36,15 @@ export default function BookingPage() {
     billingAddress: ""
   });
 
-  const experienceData = {
+  // If hotel is found, use its data, else fallback to experienceData
+  const experienceData = hotel ? {
+    title: hotel.name,
+    location: hotel.location,
+    image: hotel.image,
+    price: hotel.price,
+    originalPrice: hotel.originalPrice,
+    duration: hotel.stars + " star hotel"
+  } : {
     title: "Universal Studios Singapore Adventure",
     location: "Sentosa Island, Singapore",
     image: "https://images.unsplash.com/photo-1613767969829-3b5dda3fd227?w=400&h=300&fit=crop",
@@ -42,7 +52,6 @@ export default function BookingPage() {
     originalPrice: 64.59,
     duration: "8 hours"
   };
-
   const totalPrice = experienceData.price * guests;
   const discount = experienceData.originalPrice - experienceData.price;
   const totalDiscount = discount * guests;

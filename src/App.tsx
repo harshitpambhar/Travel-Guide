@@ -18,6 +18,7 @@ import BookingPage from "@/pages/Booking";
 import WishlistPage from "@/pages/Wishlist";
 import PackagesPage from "@/pages/Packages";
 import PackageDetailPage from "@/pages/PackageDetail";
+import AdminPanelPage from "@/pages/AdminPanel";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
           <Route path="/profile" element={<UserProfilePage />} />
           <Route path="/booking/:id" element={<BookingPage />} />
           <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/admin" element={<AdminPanelPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

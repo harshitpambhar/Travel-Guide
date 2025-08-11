@@ -16,7 +16,7 @@ type SortKey = "popularity" | "price-asc" | "price-desc" | "duration";
 export default function PackagesPage() {
   const navigate = useNavigate();
   const [query, setQuery] = useState("");
-  const [destination, setDestination] = useState("All Destinations");
+    const [destination, setDestination] = useState("All Destinations");
   const [duration, setDuration] = useState<[number, number]>([3, 15]);
   const [price, setPrice] = useState<[number, number]>([500, 3000]);
   const [sortBy, setSortBy] = useState<SortKey>("popularity");
