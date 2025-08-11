@@ -1,6 +1,11 @@
-# GlobeTrotter - Team 80
+# 🌍 GlobeTrotter – AI-Powered Global Travel Planner
 
-A comprehensive travel platform built with React, TypeScript, and modern web technologies.
+**Team 80 – odoo Hackathon Project**  
+**TL:** Harshit Pambhar  
+**Members:** Sarthak Talaviya, Krish Ramanandi, Smit Sureja  
+
+---
+
 
 ## 🚀 Features
 
