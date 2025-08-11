@@ -7,6 +7,10 @@ export interface Hotel {
   rating: number;
   city_id?: string;
   country_id?: string;
+<<<<<<< HEAD
+=======
+  image_url?: string;
+>>>>>>> df4bac4 (third commit)
   city_name?: string;
   country_name?: string;
   created_at?: string;

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useMemo } from "react";
+=======
+import { useEffect, useMemo, useState } from "react";
+>>>>>>> df4bac4 (third commit)
 import { useParams } from "react-router-dom";
 import { Header } from "@/components/layout/header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,7 +14,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useForm } from "react-hook-form";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { MapPin, CalendarDays, Users, DollarSign, Clock } from "lucide-react";
+<<<<<<< HEAD
 import { samplePackages } from "@/utils/samplePackages";
+=======
+import { packageService } from "@/services/packageService";
+>>>>>>> df4bac4 (third commit)
 import type { TravelPackage } from "@/types/travel-package";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -26,7 +34,32 @@ type BookingForm = {
 export default function PackageDetailPage() {
   const { id } = useParams();
   const { toast } = useToast();
+<<<<<<< HEAD
   const pkg: TravelPackage | undefined = useMemo(() => samplePackages.find(p => p.id === id), [id]);
+=======
+  const [pkg, setPkg] = useState<TravelPackage | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      if (!id) return;
+      try {
+        setLoading(true);
+        const data = await packageService.getById(id);
+        if (!mounted) return;
+        setPkg(data);
+        setError(null);
+      } catch (e: any) {
+        setError(e.message || 'Failed to load package');
+      } finally {
+        setLoading(false);
+      }
+    })();
+    return () => { mounted = false; };
+  }, [id]);
+>>>>>>> df4bac4 (third commit)
 
   const form = useForm<BookingForm>({
     defaultValues: {
@@ -39,13 +72,33 @@ export default function PackageDetailPage() {
     },
   });
 
+<<<<<<< HEAD
+=======
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <main className="pt-24 pb-10">
+          <div className="container mx-auto px-4">
+            <p>Loading package…</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+>>>>>>> df4bac4 (third commit)
   if (!pkg) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
         <main className="pt-24 pb-10">
           <div className="container mx-auto px-4">
+<<<<<<< HEAD
             <p>Package not found.</p>
+=======
+            <p>{error || 'Package not found.'}</p>
+>>>>>>> df4bac4 (third commit)
           </div>
         </main>
       </div>
