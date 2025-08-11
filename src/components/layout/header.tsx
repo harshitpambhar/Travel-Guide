@@ -43,8 +43,9 @@ export function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border/50">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border/50 h-24">
       <div className="container mx-auto px-4">
+        {/* Top Row - Logo and Actions */}
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
@@ -55,29 +56,6 @@ export function Header() {
               TravelGuide
             </span>
           </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <div key={item.name} className="relative">
-                <Link
-                  to={item.href}
-                  className={`transition-colors font-medium flex items-center gap-1 ${
-                    isActive(item.href)
-                      ? "text-primary"
-                      : "text-foreground hover:text-primary"
-                  }`}
-                >
-                  {item.name}
-                  {item.isNew && (
-                    <Badge className="ml-1 text-xs px-1 py-0 h-4 bg-accent text-white">
-                      New
-                    </Badge>
-                  )}
-                </Link>
-              </div>
-            ))}
-          </nav>
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-3">
@@ -131,6 +109,10 @@ export function Header() {
                   <User className="h-4 w-4 mr-2" />
                   Sign In
                 </Button>
+                <Button variant="outline" onClick={() => navigate("/admin")} className="border-orange-200 text-orange-700 hover:bg-orange-50">
+                  <Globe className="h-4 w-4 mr-2" />
+                  Admin
+                </Button>
                 <Button className="bg-gradient-to-r from-primary to-accent">
                   Join Free
                 </Button>
@@ -145,6 +127,31 @@ export function Header() {
           >
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
+        </div>
+
+        {/* Bottom Row - Navigation */}
+        <div className="hidden lg:block border-t border-border/30">
+          <nav className="flex items-center justify-center space-x-11 py-1">
+            {navItems.map((item) => (
+              <div key={item.name} className="relative">
+                <Link
+                  to={item.href}
+                  className={`transition-colors font-medium flex items-center gap-1 ${
+                    isActive(item.href)
+                      ? "text-primary"
+                      : "text-foreground hover:text-primary"
+                  }`}
+                >
+                  {item.name}
+                  {item.isNew && (
+                    <Badge className="ml-1 text-xs px-1 py-0 h-4 bg-accent text-white">
+                      New
+                    </Badge>
+                  )}
+                </Link>
+              </div>
+            ))}
+          </nav>
         </div>
 
         {/* Mobile Menu */}
@@ -197,6 +204,10 @@ export function Header() {
                   <Button variant="outline" className="justify-start" onClick={handleSignIn}>
                     <User className="h-4 w-4 mr-2" />
                     Sign In
+                  </Button>
+                  <Button variant="outline" className="justify-start border-orange-200 text-orange-700 hover:bg-orange-50" onClick={() => navigate("/admin")}>
+                    <Globe className="h-4 w-4 mr-2" />
+                    Admin
                   </Button>
                   <Button className="bg-gradient-to-r from-primary to-accent justify-start">
                     Join Free

@@ -5,7 +5,7 @@ const AIPlannerPage = () => {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="pt-20 container mx-auto px-4">
+      <main className="pt-24 container mx-auto px-4">
         <AIPlannerInline />
       </main>
     </div>

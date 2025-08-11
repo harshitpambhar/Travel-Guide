@@ -58,7 +58,7 @@ export default function UserProfilePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="pt-20 pb-10">
+              <main className="pt-24 pb-10">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {/* Profile Header */}

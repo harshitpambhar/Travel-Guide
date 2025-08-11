@@ -215,7 +215,7 @@ export default function VRPreviewPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="pt-20 pb-10">
+              <main className="pt-24 pb-10">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="mb-8">

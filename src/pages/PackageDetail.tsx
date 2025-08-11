@@ -43,7 +43,7 @@ export default function PackageDetailPage() {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
-        <main className="pt-20 pb-10">
+        <main className="pt-24 pb-10">
           <div className="container mx-auto px-4">
             <p>Package not found.</p>
           </div>
@@ -65,7 +65,7 @@ export default function PackageDetailPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <main className="pt-20 pb-12">
+              <main className="pt-24 pb-12">
         <div className="container mx-auto px-4">
           <div className="mb-6">
             <h1 className="text-3xl md:text-4xl font-bold mb-2">{pkg.name}</h1>
