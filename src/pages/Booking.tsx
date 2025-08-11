@@ -47,7 +47,7 @@ export default function BookingPage() {
   } : {
     title: "Universal Studios Singapore Adventure",
     location: "Sentosa Island, Singapore",
-    image: "https://images.unsplash.com/photo-1613767969829-3b5dda3fd227?w=400&h=300&fit=crop",
+    image: "https://images.unsplash.com/photo-1560818428-19ff55a57b7f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2luZ2Fwb3VyJTIwYWR2ZW50dXJlfGVufDB8fDB8fHww",
     price: 58.95,
     originalPrice: 64.59,
     duration: "8 hours"

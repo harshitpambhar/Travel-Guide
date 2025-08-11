@@ -51,6 +51,7 @@ The park features seven themed zones:
 
 Perfect for families, thrill-seekers, and movie enthusiasts alike!`,
   images: [
+    "https://images.unsplash.com/photo-1560818428-19ff55a57b7f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2luZ2Fwb3VyJTIwYWR2ZW50dXJlfGVufDB8fDB8fHww",
     "https://images.unsplash.com/photo-1613767969829-3b5dda3fd227?w=800&h=600&fit=crop",
     "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=800&h=600&fit=crop",
     "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&h=600&fit=crop",
@@ -190,7 +191,7 @@ export default function ExperienceDetailPage() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-5 gap-2">
                   {experienceData.images.map((image, index) => (
                     <button
                       key={index}
