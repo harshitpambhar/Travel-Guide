@@ -19,6 +19,8 @@ import WishlistPage from "@/pages/Wishlist";
 import PackagesPage from "@/pages/Packages";
 import PackageDetailPage from "@/pages/PackageDetail";
 import AdminPanelPage from "@/pages/AdminPanel";
+import SignUp from "@/pages/SignUp";
+import SignIn from "@/pages/SignIn";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +32,8 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/ai-planner" element={<AIPlannerPage />} />
           <Route path="/experiences" element={<ExperiencesPage />} />
           <Route path="/experiences/:id" element={<ExperienceDetailPage />} />

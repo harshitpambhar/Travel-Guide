@@ -105,10 +105,17 @@ export function Header() {
               </DropdownMenu>
             ) : (
               <>
-                <Button variant="outline" onClick={handleSignIn}>
-                  <User className="h-4 w-4 mr-2" />
-                  Sign In
-                </Button>
+                <Link to="/signin">
+                  <Button variant="outline">
+                    <User className="h-4 w-4 mr-2" />
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/signup">
+                  <Button className="bg-gradient-to-r from-primary to-accent">
+                    Sign Up
+                  </Button>
+                </Link>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="border-orange-200 text-orange-700 hover:bg-orange-50">
@@ -129,9 +136,6 @@ export function Header() {
                     <DropdownMenuItem onClick={() => navigate("/admin/profile")}>Profile/Settings</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <Button className="bg-gradient-to-r from-primary to-accent">
-                  Join Free
-                </Button>
               </>
             )}
           </div>
@@ -217,16 +221,20 @@ export function Header() {
                 </>
               ) : (
                 <>
-                  <Button variant="outline" className="justify-start" onClick={handleSignIn}>
-                    <User className="h-4 w-4 mr-2" />
-                    Sign In
-                  </Button>
+                  <Link to="/signin" className="w-full">
+                    <Button variant="outline" className="justify-start w-full">
+                      <User className="h-4 w-4 mr-2" />
+                      Sign In
+                    </Button>
+                  </Link>
+                  <Link to="/signup" className="w-full">
+                    <Button className="bg-gradient-to-r from-primary to-accent justify-start w-full">
+                      Sign Up
+                    </Button>
+                  </Link>
                   <Button variant="outline" className="justify-start border-orange-200 text-orange-700 hover:bg-orange-50" onClick={() => navigate("/admin")}>
                     <Globe className="h-4 w-4 mr-2" />
                     Admin
-                  </Button>
-                  <Button className="bg-gradient-to-r from-primary to-accent justify-start">
-                    Join Free
                   </Button>
                 </>
               )}
