@@ -34,9 +34,9 @@ type BookingForm = {
 export default function PackageDetailPage() {
   const { id } = useParams();
   const { toast } = useToast();
-<<<<<<< HEAD
+
   const pkg: TravelPackage | undefined = useMemo(() => samplePackages.find(p => p.id === id), [id]);
-=======
+
   const [pkg, setPkg] = useState<TravelPackage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -59,7 +59,6 @@ export default function PackageDetailPage() {
     })();
     return () => { mounted = false; };
   }, [id]);
->>>>>>> df4bac4 (third commit)
 
   const form = useForm<BookingForm>({
     defaultValues: {
@@ -72,8 +71,7 @@ export default function PackageDetailPage() {
     },
   });
 
-<<<<<<< HEAD
-=======
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -87,18 +85,18 @@ export default function PackageDetailPage() {
     );
   }
 
->>>>>>> df4bac4 (third commit)
+
   if (!pkg) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
         <main className="pt-24 pb-10">
           <div className="container mx-auto px-4">
-<<<<<<< HEAD
+
             <p>Package not found.</p>
-=======
+
             <p>{error || 'Package not found.'}</p>
->>>>>>> df4bac4 (third commit)
+
           </div>
         </main>
       </div>
