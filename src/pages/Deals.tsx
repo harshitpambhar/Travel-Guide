@@ -108,6 +108,26 @@ export default function DealsPage() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        setLoading(true);
+        const data = await dealService.getAll();
+        if (!mounted) return;
+        setDeals(data);
+        setError(null);
+      } catch (e: any) {
+        setError(e.message || 'Failed to load deals');
+      } finally {
+        setLoading(false);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   // Calculate flash sale timer (using the first flash sale deal)
   const flashSaleDeal = deals.find(deal => deal.is_flash_sale);
   const flashSaleTimer = flashSaleDeal ? calculateTimeRemaining(flashSaleDeal.valid_until) : null;
@@ -271,7 +291,7 @@ export default function DealsPage() {
                   id="flash-sale"
                   checked={showFlashSales}
 
-                  onCheckedChange={(checked) => setShowFlashSales(checked === true)}
+                  
 
                   onCheckedChange={(checked) => setShowFlashSales(!!checked)}
 
