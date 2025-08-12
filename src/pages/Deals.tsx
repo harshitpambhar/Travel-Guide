@@ -1,8 +1,12 @@
 <<<<<<< HEAD
 import { useState, useEffect } from "react";
 =======
+<<<<<<< HEAD
+import { useState, useEffect } from "react";
+=======
 import { useEffect, useMemo, useState } from "react";
 >>>>>>> df4bac4 (third commit)
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -169,6 +173,9 @@ const locations = [
 ];
 
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
 // Helper function to calculate time remaining
 const calculateTimeRemaining = (validUntil: string) => {
   const now = new Date().getTime();
@@ -200,8 +207,11 @@ const formatFlashSaleTimer = (timeRemaining: ReturnType<typeof calculateTimeRema
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 };
 
+<<<<<<< HEAD
+=======
 =======
 >>>>>>> df4bac4 (third commit)
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
 export default function DealsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
@@ -211,6 +221,9 @@ export default function DealsPage() {
   const [sortBy, setSortBy] = useState("discount");
   const [showFlashSales, setShowFlashSales] = useState(false);
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // Update time every second for real-time countdown
@@ -400,8 +413,12 @@ export default function DealsPage() {
 <<<<<<< HEAD
                   onCheckedChange={(checked) => setShowFlashSales(checked === true)}
 =======
+<<<<<<< HEAD
+                  onCheckedChange={(checked) => setShowFlashSales(checked === true)}
+=======
                   onCheckedChange={(checked) => setShowFlashSales(!!checked)}
 >>>>>>> df4bac4 (third commit)
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
                 />
                 <label htmlFor="flash-sale" className="text-sm font-medium flex items-center gap-1">
                   <Flame className="h-3 w-3" />

@@ -63,6 +63,16 @@ export function LocationRequestManager() {
       setRequests([]);
     }
 =======
+<<<<<<< HEAD
+  // Load requests from localStorage (including new submissions)
+  useEffect(() => {
+    const storedRequests = localStorage.getItem('locationRequests');
+    if (storedRequests) {
+      setRequests(JSON.parse(storedRequests));
+    } else {
+      setRequests([]);
+    }
+=======
   // Sample data - in real app, this would come from API
   useEffect(() => {
     const sampleRequests: LocationRequest[] = [
@@ -141,6 +151,7 @@ export function LocationRequestManager() {
     ];
     setRequests(sampleRequests);
 >>>>>>> df4bac4 (third commit)
+>>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
   }, []);
 
   const handleStatusChange = (requestId: string, newStatus: 'approved' | 'declined', adminNotes?: string) => {
