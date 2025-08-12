@@ -100,6 +100,12 @@ export function LocationRequestForm() {
       existingRequests.push(requestData);
       localStorage.setItem('locationRequests', JSON.stringify(existingRequests));
 
+      try {
+        const channel = new BroadcastChannel('locationRequests');
+        channel.postMessage({ type: 'new', request: requestData });
+        channel.close();
+      } catch {}
+
       toast({
         title: "Location request submitted!",
         description: "Thank you for your submission. Our team will review it shortly.",

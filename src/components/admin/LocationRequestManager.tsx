@@ -55,16 +55,45 @@ export function LocationRequestManager() {
 
   // Load requests from localStorage (including new submissions)
   useEffect(() => {
+    const load = () => {
     const storedRequests = localStorage.getItem('locationRequests');
     if (storedRequests) {
       setRequests(JSON.parse(storedRequests));
     } else {
       setRequests([]);
   }
+  };
+    load();
+
+    // Listen for localStorage changes from other tabs
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'locationRequests') {
+        load();
+      }
+    };
+    window.addEventListener('storage', onStorage);
+
+    // Listen via BroadcastChannel for immediate updates
+    let channel: BroadcastChannel | null = null;
+    try {
+      channel = new BroadcastChannel('locationRequests');
+      channel.onmessage = (event) => {
+        if (event.data?.type === 'new' || event.data?.type === 'update') {
+          load();
+        }
+      };
+    } catch {}
+
+    return () => {
+      window.removeEventListener('storage', onStorage);
+      try { channel?.close(); } catch {}
+    };
+
   }, []);
 
   const handleStatusChange = (requestId: string, newStatus: 'approved' | 'declined', adminNotes?: string) => {
-    setRequests(prev => prev.map(req => {
+    setRequests(prev => {
+      const updated = prev.map(req => {
       if (req.id === requestId) {
         return {
           ...req,
@@ -75,7 +104,20 @@ export function LocationRequestManager() {
         };
       }
       return req;
-    }));
+    });
+
+      // Persist to localStorage so other views reflect the change
+      localStorage.setItem('locationRequests', JSON.stringify(updated));
+
+      // Broadcast update to other tabs
+      try {
+        const channel = new BroadcastChannel('locationRequests');
+        channel.postMessage({ type: 'update' });
+        channel.close();
+      } catch {}
+
+      return updated;
+    });
 
     toast({
       title: `Request ${newStatus}`,
