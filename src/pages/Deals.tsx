@@ -117,8 +117,12 @@ export default function DealsPage() {
         if (!mounted) return;
         setDeals(data);
         setError(null);
-      } catch (e: any) {
-        setError(e.message || 'Failed to load deals');
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          setError(e.message);
+        } else {
+          setError('Failed to load deals');
+        }
       } finally {
         setLoading(false);
       }
