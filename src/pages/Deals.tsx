@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-import { useState, useEffect } from "react";
-=======
-<<<<<<< HEAD
-import { useState, useEffect } from "react";
-=======
+
 import { useEffect, useMemo, useState } from "react";
->>>>>>> df4bac4 (third commit)
->>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
+
 import { Header } from "@/components/layout/header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,121 +28,7 @@ import {
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 
-<<<<<<< HEAD
-// Mock deals data
-const deals = [
-  {
-    id: "1",
-    title: "Singapore Staycation Package",
-    description: "3D2N at Marina Bay Sands with breakfast and city tour",
-    location: "Singapore",
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
-    originalPrice: 1200,
-    discountedPrice: 799,
-    discount: 33,
-    validUntil: "2024-01-23",
-    category: "Hotels",
-    rating: 4.8,
-    reviewCount: 15420,
-    features: ["Free Breakfast", "City Tour", "Spa Credit", "Late Checkout"],
-    isFlashSale: true,
-    isExclusive: true,
-    remainingTime: "2 days left"
-  },
-  {
-    id: "2",
-    title: "Bali Adventure Bundle",
-    description: "5D4N adventure package with temple visits and water sports",
-    location: "Bali, Indonesia",
-    image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&h=400&fit=crop",
-    originalPrice: 850,
-    discountedPrice: 599,
-    discount: 29,
-    validUntil: "2024-01-24",
-    category: "Adventure",
-    rating: 4.7,
-    reviewCount: 8923,
-    features: ["Temple Tours", "Water Sports", "Local Guide", "Airport Transfer"],
-    isFlashSale: false,
-    isExclusive: false,
-    remainingTime: "15 days left"
-  },
-  {
-    id: "3",
-    title: "Tokyo Food & Culture Experience",
-    description: "4D3N culinary journey through Tokyo's best restaurants",
-    location: "Tokyo, Japan",
-    image: "https://images.unsplash.com/photo-1554797589-7241bb691973?w=600&h=400&fit=crop",
-    originalPrice: 1100,
-    discountedPrice: 749,
-    discount: 32,
-    validUntil: "2024-01-23",
-    category: "Food Tours",
-    rating: 4.9,
-    reviewCount: 6789,
-    features: ["Michelin Restaurants", "Cooking Class", "Market Tour", "Sake Tasting"],
-    isFlashSale: true,
-    isExclusive: true,
-    remainingTime: "8 days left"
-  },
-  {
-    id: "4",
-    title: "European River Cruise",
-    description: "7D6N luxury cruise along the Rhine River",
-    location: "Europe",
-    image: "https://plus.unsplash.com/premium_photo-1712933121311-dcdc41d9fb17?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDM4fEZ6bzN6dU9ITjZ3fHxlbnwwfHx8fHw%3D?w=600&h=400&fit=crop",
-    originalPrice: 2500,
-    discountedPrice: 1899,
-    discount: 24,
-    validUntil: "2024-01-25",
-    category: "Cruises",
-    rating: 4.8,
-    reviewCount: 15234,
-    features: ["All-Inclusive", "Guided Tours", "Fine Dining", "Entertainment"],
-    isFlashSale: false,
-    isExclusive: false,
-    remainingTime: "45 days left"
-  },
-  {
-    id: "5",
-    title: "New Zealand Adventure",
-    description: "10D9N epic journey through Middle Earth",
-    location: "New Zealand",
-    image: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=600&h=400&fit=crop",
-    originalPrice: 3200,
-    discountedPrice: 2399,
-    discount: 25,
-    validUntil: "2024-01-26",
-    category: "Adventure",
-    rating: 4.9,
-    reviewCount: 8923,
-    features: ["LOTR Locations", "Hiking Tours", "Helicopter Ride", "Wine Tasting"],
-    isFlashSale: false,
-    isExclusive: true,
-    remainingTime: "60 days left"
-  },
-  {
-    id: "6",
-    title: "Maldives Paradise Escape",
-    description: "6D5N overwater villa with all-inclusive package",
-    location: "Maldives",
-    image: "https://plus.unsplash.com/premium_photo-1720760946886-286458e746ba?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQyfEZ6bzN6dU9ITjZ3fHxlbnwwfHx8fDB8fHw%3D?w=600&h=400&fit=crop",
-    originalPrice: 3800,
-    discountedPrice: 2899,
-    discount: 24,
-    validUntil: "2024-01-24",
-    category: "Luxury",
-    rating: 4.9,
-    reviewCount: 7654,
-    features: ["Overwater Villa", "All-Inclusive", "Spa Treatments", "Water Sports"],
-    isFlashSale: true,
-    isExclusive: true,
-    remainingTime: "20 days left"
-  }
-];
-=======
 import { dealService, type TravelDeal } from "@/services/dealService";
->>>>>>> df4bac4 (third commit)
 
 const categories = [
   "All Categories",
@@ -172,10 +52,7 @@ const locations = [
   "Thailand"
 ];
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
+
 // Helper function to calculate time remaining
 const calculateTimeRemaining = (validUntil: string) => {
   const now = new Date().getTime();
@@ -207,11 +84,6 @@ const formatFlashSaleTimer = (timeRemaining: ReturnType<typeof calculateTimeRema
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 };
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> df4bac4 (third commit)
->>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
 export default function DealsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
@@ -220,10 +92,11 @@ export default function DealsPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("discount");
   const [showFlashSales, setShowFlashSales] = useState(false);
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
+
+  const [deals, setDeals] = useState<TravelDeal[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // Update time every second for real-time countdown
@@ -236,72 +109,66 @@ export default function DealsPage() {
   }, []);
 
   // Calculate flash sale timer (using the first flash sale deal)
-  const flashSaleDeal = deals.find(deal => deal.isFlashSale);
-  const flashSaleTimer = flashSaleDeal ? calculateTimeRemaining(flashSaleDeal.validUntil) : null;
+  const flashSaleDeal = deals.find(deal => deal.is_flash_sale);
+  const flashSaleTimer = flashSaleDeal ? calculateTimeRemaining(flashSaleDeal.valid_until) : null;
   const flashSaleFormatted = flashSaleTimer ? formatFlashSaleTimer(flashSaleTimer) : "00:00:00";
 
-  const filteredDeals = deals.filter(deal => {
-    const matchesSearch = deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         deal.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         deal.location.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === "All Categories" || deal.category === selectedCategory;
-    const matchesLocation = selectedLocation === "All Locations" || deal.location.includes(selectedLocation);
-    const matchesPrice = deal.discountedPrice >= priceRange[0] && deal.discountedPrice <= priceRange[1];
-    const matchesFlashSale = !showFlashSales || deal.isFlashSale;
-=======
-  const [deals, setDeals] = useState<TravelDeal[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  // Filter deals based on search, category, location, price, and flash sale
+  const filteredDeals = useMemo(() => {
+    return deals.filter((deal) => {
+      // Search filter
+      const matchesSearch =
+        searchQuery.trim() === "" ||
+        deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        deal.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        deal.location.toLowerCase().includes(searchQuery.toLowerCase());
 
-  useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        setLoading(true);
-        const data = await dealService.getAll();
-        if (!mounted) return;
-        setDeals(data);
-        setError(null);
-      } catch (e: any) {
-        setError(e.message || 'Failed to load deals');
-      } finally {
-        setLoading(false);
-      }
-    })();
-    return () => { mounted = false; };
-  }, []);
+      // Category filter
+      const matchesCategory =
+        selectedCategory === "All Categories" ||
+        deal.category === selectedCategory;
 
-  const filteredDeals = deals.filter(deal => {
-    const matchesSearch = deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         (deal.description || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         (deal.location || '').toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === "All Categories" || deal.category === selectedCategory;
-    const matchesLocation = selectedLocation === "All Locations" || (deal.location || '').includes(selectedLocation);
-    const matchesPrice = deal.discounted_price >= priceRange[0] && deal.discounted_price <= priceRange[1];
-    const matchesFlashSale = !showFlashSales || deal.is_flash_sale;
->>>>>>> df4bac4 (third commit)
+      // Location filter
+      const matchesLocation =
+        selectedLocation === "All Locations" ||
+        deal.location === selectedLocation;
 
-    return matchesSearch && matchesCategory && matchesLocation && matchesPrice && matchesFlashSale;
-  });
+      // Price range filter
+      const matchesPrice =
+        deal.discounted_price >= priceRange[0] &&
+        deal.discounted_price <= priceRange[1];
+
+      // Flash sale filter
+      const matchesFlashSale =
+        !showFlashSales || deal.is_flash_sale;
+
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesLocation &&
+        matchesPrice &&
+        matchesFlashSale
+      );
+    });
+  }, [
+    deals,
+    searchQuery,
+    selectedCategory,
+    selectedLocation,
+    priceRange,
+    showFlashSales,
+  ]);
 
   const sortedDeals = [...filteredDeals].sort((a, b) => {
     switch (sortBy) {
       case "discount":
         return b.discount - a.discount;
       case "price":
-<<<<<<< HEAD
-        return a.discountedPrice - b.discountedPrice;
-      case "rating":
-        return b.rating - a.rating;
-      case "validity":
-        return new Date(a.validUntil).getTime() - new Date(b.validUntil).getTime();
-=======
         return a.discounted_price - b.discounted_price;
       case "rating":
         return (b.rating || 0) - (a.rating || 0);
       case "validity":
         return new Date(a.valid_until).getTime() - new Date(b.valid_until).getTime();
->>>>>>> df4bac4 (third commit)
       default:
         return b.discount - a.discount;
     }
@@ -335,14 +202,7 @@ export default function DealsPage() {
                   <p className="text-red-100">Up to 50% off on selected packages</p>
                 </div>
               </div>
-<<<<<<< HEAD
-              <div className="text-right">
-                <div className="text-2xl font-bold font-mono">{flashSaleFormatted}</div>
-                <div className="text-sm text-red-100">Time Remaining</div>
-              </div>
-=======
               <div className="text-right text-sm">Live offers, updated daily</div>
->>>>>>> df4bac4 (third commit)
             </div>
           </Card>
 
@@ -410,15 +270,11 @@ export default function DealsPage() {
                 <Checkbox 
                   id="flash-sale"
                   checked={showFlashSales}
-<<<<<<< HEAD
+
                   onCheckedChange={(checked) => setShowFlashSales(checked === true)}
-=======
-<<<<<<< HEAD
-                  onCheckedChange={(checked) => setShowFlashSales(checked === true)}
-=======
+
                   onCheckedChange={(checked) => setShowFlashSales(!!checked)}
->>>>>>> df4bac4 (third commit)
->>>>>>> 369c4e1230df44d89831b49ecb746e5f9563ac88
+
                 />
                 <label htmlFor="flash-sale" className="text-sm font-medium flex items-center gap-1">
                   <Flame className="h-3 w-3" />
@@ -470,13 +326,7 @@ export default function DealsPage() {
 
           {/* Results */}
           <div className="mb-6">
-<<<<<<< HEAD
-            <p className="text-muted-foreground">
-              Showing {sortedDeals.length} of {deals.length} deals
-            </p>
-=======
             <p className="text-muted-foreground">{loading ? 'Loading deals…' : error ? `Error: ${error}` : `Showing ${sortedDeals.length} of ${deals.length} deals`}</p>
->>>>>>> df4bac4 (third commit)
           </div>
 
           {/* Deals Grid */}
@@ -490,41 +340,25 @@ export default function DealsPage() {
                 <div className="relative">
                   <div className="aspect-[4/3] overflow-hidden bg-muted">
                     <img
-<<<<<<< HEAD
-                      src={deal.image}
-                      alt={deal.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-=======
                       src={deal.image_url || '/placeholder.svg'}
                       alt={deal.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       onError={(e) => { const t = e.currentTarget as HTMLImageElement; if (t.src !== '/placeholder.svg') { t.src = '/placeholder.svg'; }}}
->>>>>>> df4bac4 (third commit)
                     />
                   </div>
                   
                   {/* Badges */}
                   <div className="absolute top-3 left-3 flex flex-col gap-2">
                     <Badge className="bg-red-500 text-white font-bold text-lg px-3 py-1">
-<<<<<<< HEAD
-                      -{deal.discount}%
-                    </Badge>
-                    {deal.isFlashSale && (
-=======
                        -{deal.discount}%
                     </Badge>
                     {deal.is_flash_sale && (
->>>>>>> df4bac4 (third commit)
                       <Badge className="bg-orange-500 text-white font-semibold flex items-center gap-1">
                         <Flame className="h-3 w-3" />
                         Flash Sale
                       </Badge>
                     )}
-<<<<<<< HEAD
-                    {deal.isExclusive && (
-=======
                     {deal.is_exclusive && (
->>>>>>> df4bac4 (third commit)
                       <Badge className="bg-gradient-to-r from-accent to-primary text-white font-semibold">
                         <Sparkles className="h-3 w-3 mr-1" />
                         Exclusive
@@ -536,11 +370,7 @@ export default function DealsPage() {
                   <div className="absolute top-3 right-3 bg-black/70 text-white rounded-full px-3 py-1 text-sm">
                     <div className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
-<<<<<<< HEAD
-                      {deal.remainingTime}
-=======
                        {`Valid until ${deal.valid_until}`}
->>>>>>> df4bac4 (third commit)
                     </div>
                   </div>
                 </div>
@@ -548,22 +378,14 @@ export default function DealsPage() {
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-2">
                     <Badge variant="outline" className="text-primary border-primary/30">
-<<<<<<< HEAD
-                      {deal.category}
-=======
                        {deal.category}
->>>>>>> df4bac4 (third commit)
                     </Badge>
                     <div className="flex items-center gap-1 text-sm">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                       <span className="font-semibold">{deal.rating}</span>
-<<<<<<< HEAD
-                      <span className="text-muted-foreground">({deal.reviewCount.toLocaleString()})</span>
-=======
                        {typeof deal.review_count === 'number' && (
                          <span className="text-muted-foreground">({deal.review_count.toLocaleString()})</span>
                        )}
->>>>>>> df4bac4 (third commit)
                     </div>
                   </div>
 
@@ -597,17 +419,10 @@ export default function DealsPage() {
                     <div className="flex flex-col">
                       <div className="flex items-baseline gap-2">
                         <span className="text-2xl font-bold text-primary">
-<<<<<<< HEAD
-                          ${deal.discountedPrice}
-                        </span>
-                        <span className="text-lg text-muted-foreground line-through">
-                          ${deal.originalPrice}
-=======
                            ${deal.discounted_price}
                         </span>
                         <span className="text-lg text-muted-foreground line-through">
                            ${deal.original_price}
->>>>>>> df4bac4 (third commit)
                         </span>
                       </div>
                       <span className="text-sm text-muted-foreground">per person</span>

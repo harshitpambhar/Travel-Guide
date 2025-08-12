@@ -1,11 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
 
-<<<<<<< HEAD
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-=======
 // Vite exposes env vars on import.meta.env with VITE_ prefix
 const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL as string | undefined;
 const supabaseAnonKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY as string | undefined;
@@ -18,4 +12,3 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
->>>>>>> df4bac4 (third commit)

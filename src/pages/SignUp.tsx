@@ -9,12 +9,9 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Home } from "lucide-react";
-<<<<<<< HEAD
-=======
 import { supabase } from "@/lib/supabase";
 import bcrypt from 'bcryptjs';
 import { profileService } from "@/services/profileService";
->>>>>>> df4bac4 (third commit)
 
 const userSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -49,35 +46,6 @@ export default function SignUp() {
     setIsSubmitting(true);
     
     try {
-<<<<<<< HEAD
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Store user data in localStorage (in a real app, this would go to a database)
-      const userData = {
-        id: Date.now().toString(),
-        name: values.name,
-        email: values.email,
-        phone: values.phone,
-        type: "user", // Only regular users can sign up
-        password: values.password, // In real app, this would be hashed
-        createdAt: new Date().toISOString()
-      };
-      
-      localStorage.setItem('signupUserData', JSON.stringify(userData));
-      
-      toast({
-        title: "Account created successfully!",
-        description: "Please sign in with your new account.",
-      });
-      
-      // Redirect to sign in page
-      navigate('/signin');
-    } catch (error) {
-      toast({
-        title: "Error creating account",
-        description: "Please try again later.",
-=======
       // Sign up the user with Supabase auth
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: values.email,
@@ -143,7 +111,6 @@ export default function SignUp() {
       toast({
         title: "Error creating account",
         description: (error as any)?.message || "Please try again later.",
->>>>>>> df4bac4 (third commit)
         variant: "destructive",
       });
     } finally {

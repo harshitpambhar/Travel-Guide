@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useMemo, useState } from "react";
-=======
 import { useEffect, useMemo, useState } from "react";
->>>>>>> df4bac4 (third commit)
 import { Header } from "@/components/layout/header";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,11 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Filter, MapPin, Users, Calendar as CalendarIcon, Plane, DollarSign, Clock } from "lucide-react";
 import type { TravelPackage } from "@/types/travel-package";
-<<<<<<< HEAD
-import { samplePackages } from "@/utils/samplePackages";
-=======
 import { packageService } from "@/services/packageService";
->>>>>>> df4bac4 (third commit)
 import { useNavigate } from "react-router-dom";
 
 type SortKey = "popularity" | "price-asc" | "price-desc" | "duration";
@@ -30,16 +22,6 @@ export default function PackagesPage() {
   const [sortBy, setSortBy] = useState<SortKey>("popularity");
   const [showFilters, setShowFilters] = useState(false);
 
-<<<<<<< HEAD
-  const destinations = useMemo(() => {
-    const all = new Set<string>();
-    samplePackages.forEach(p => p.destinations.forEach(d => all.add(d)));
-    return ["All Destinations", ...Array.from(all).sort()];
-  }, []);
-
-  const filtered: TravelPackage[] = useMemo(() => {
-    return samplePackages.filter(p => {
-=======
   const [packages, setPackages] = useState<TravelPackage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -70,7 +52,6 @@ export default function PackagesPage() {
 
   const filtered: TravelPackage[] = useMemo(() => {
     return packages.filter(p => {
->>>>>>> df4bac4 (third commit)
       const matchesQuery = p.name.toLowerCase().includes(query.toLowerCase()) ||
         p.destinations.some(d => d.toLowerCase().includes(query.toLowerCase()));
       const matchesDestination = destination === "All Destinations" || p.destinations.includes(destination);
@@ -78,11 +59,7 @@ export default function PackagesPage() {
       const matchesPrice = p.price >= price[0] && p.price <= price[1];
       return matchesQuery && matchesDestination && matchesDuration && matchesPrice;
     });
-<<<<<<< HEAD
-  }, [query, destination, duration, price]);
-=======
   }, [packages, query, destination, duration, price]);
->>>>>>> df4bac4 (third commit)
 
   const sorted = useMemo(() => {
     const arr = [...filtered];
@@ -175,11 +152,7 @@ export default function PackagesPage() {
           )}
 
           <div className="mb-6">
-<<<<<<< HEAD
-            <p className="text-muted-foreground">Showing {sorted.length} of {samplePackages.length} packages</p>
-=======
             <p className="text-muted-foreground">{loading ? 'Loading packages…' : error ? `Error: ${error}` : `Showing ${sorted.length} of ${packages.length} packages`}</p>
->>>>>>> df4bac4 (third commit)
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

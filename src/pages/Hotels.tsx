@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useState } from "react";
-=======
 import { useEffect, useMemo, useState } from "react";
->>>>>>> df4bac4 (third commit)
 import { useNavigate } from "react-router-dom";
 import { Header } from "@/components/layout/header";
 import { HotelFinder } from "@/components/ui/hotel-finder";
@@ -32,96 +28,6 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
-<<<<<<< HEAD
-
-// Mock hotel data
-export const hotels = [
-  {
-    id: "1",
-    name: "Marina Bay Sands",
-    location: "Marina Bay, Singapore",
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
-    rating: 4.8,
-    reviewCount: 15420,
-    price: 450,
-    originalPrice: 520,
-    amenities: ["Wifi", "Pool", "Gym", "Restaurant", "Spa"],
-    stars: 5,
-    isPopular: true,
-    isExclusive: false
-  },
-  {
-    id: "2",
-    name: "Raffles Hotel Singapore",
-    location: "Beach Road, Singapore",
-    image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&h=400&fit=crop",
-    rating: 4.9,
-    reviewCount: 8923,
-    price: 850,
-    originalPrice: 950,
-    amenities: ["Wifi", "Pool", "Gym", "Restaurant", "Spa", "Butler"],
-    stars: 5,
-    isPopular: false,
-    isExclusive: true
-  },
-  {
-    id: "3",
-    name: "Parkroyal Collection Marina Bay",
-    location: "Marina Bay, Singapore",
-    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&h=400&fit=crop",
-    rating: 4.6,
-    reviewCount: 6789,
-    price: 320,
-    originalPrice: 380,
-    amenities: ["Wifi", "Pool", "Gym", "Restaurant"],
-    stars: 4,
-    isPopular: true,
-    isExclusive: false
-  },
-  {
-    id: "4",
-    name: "The Fullerton Hotel",
-    location: "Fullerton Road, Singapore",
-    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&h=400&fit=crop",
-    rating: 4.7,
-    reviewCount: 5432,
-    price: 380,
-    originalPrice: 420,
-    amenities: ["Wifi", "Pool", "Restaurant", "Bar"],
-    stars: 5,
-    isPopular: false,
-    isExclusive: false
-  },
-  {
-    id: "5",
-    name: "Shangri-La Hotel Singapore",
-    location: "Orange Grove Road, Singapore",
-    image: "https://images.unsplash.com/photo-1455587734955-081b22074882?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aG90ZWx8ZW58MHx8MHx8fDA%3D?w=600&h=400&fit=crop",
-    rating: 4.8,
-    reviewCount: 7654,
-    price: 420,
-    originalPrice: 480,
-    amenities: ["Wifi", "Pool", "Gym", "Restaurant", "Spa", "Tennis"],
-    stars: 5,
-    isPopular: true,
-    isExclusive: false
-  },
-  {
-    id: "6",
-    name: "The Ritz-Carlton Millenia Singapore",
-    location: "Marina Bay, Singapore",
-    image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop",
-    rating: 4.9,
-    reviewCount: 4321,
-    price: 580,
-    originalPrice: 650,
-    amenities: ["Wifi", "Pool", "Gym", "Restaurant", "Spa", "Concierge"],
-    stars: 5,
-    isPopular: false,
-    isExclusive: true
-  }
-];
-=======
 import { hotelService } from "@/services/hotelService";
 import type { HotelWithRelations } from "@/types/hotel";
 
@@ -140,7 +46,6 @@ type UIHotel = {
   isPopular: boolean;
   isExclusive: boolean;
 };
->>>>>>> df4bac4 (third commit)
 
 const amenities = [
   { id: "Wifi", label: "Wifi", icon: Wifi },
@@ -165,8 +70,6 @@ export default function HotelsPage() {
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("popularity");
-<<<<<<< HEAD
-=======
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [hotels, setHotels] = useState<UIHotel[]>([]);
@@ -205,7 +108,6 @@ export default function HotelsPage() {
       mounted = false;
     };
   }, []);
->>>>>>> df4bac4 (third commit)
 
   const filteredHotels = hotels.filter(hotel => {
     const matchesSearch = hotel.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -363,11 +265,7 @@ export default function HotelsPage() {
           {/* Results */}
           <div className="mb-6">
             <p className="text-muted-foreground">
-<<<<<<< HEAD
-              Showing {sortedHotels.length} of {hotels.length} hotels
-=======
               {loading ? 'Loading hotels…' : error ? `Error: ${error}` : `Showing ${sortedHotels.length} of ${hotels.length} hotels`}
->>>>>>> df4bac4 (third commit)
             </p>
           </div>
 
@@ -385,15 +283,12 @@ export default function HotelsPage() {
                       src={hotel.image}
                       alt={hotel.name}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-<<<<<<< HEAD
-=======
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement;
                         if (target.src !== '/placeholder.svg') {
                           target.src = '/placeholder.svg';
                         }
                       }}
->>>>>>> df4bac4 (third commit)
                     />
                   </div>
                   

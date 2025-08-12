@@ -9,11 +9,8 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, Home } from "lucide-react";
-<<<<<<< HEAD
-=======
 import { supabase } from "@/lib/supabase";
 import bcrypt from 'bcryptjs';
->>>>>>> df4bac4 (third commit)
 
 const signInSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -39,27 +36,6 @@ export default function SignIn() {
     setIsSubmitting(true);
     
     try {
-<<<<<<< HEAD
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Check if user exists in signupUserData (regular users)
-      const signupUserData = localStorage.getItem('signupUserData');
-      let userData = null;
-      
-      if (signupUserData) {
-        try {
-          const parsedData = JSON.parse(signupUserData);
-          if (parsedData.email === values.email && parsedData.password === values.password) {
-            userData = parsedData;
-          }
-        } catch (error) {
-          console.error('Error parsing signup data:', error);
-        }
-      }
-      
-      // Check if admin exists (pre-defined admin accounts + development accounts)
-=======
       // First try Supabase auth (primary)
       const { data, error } = await supabase.auth.signInWithPassword({
         email: values.email,
@@ -91,7 +67,6 @@ export default function SignIn() {
       }
 
       // Fallback: check if admin exists (pre-defined admin accounts + development accounts)
->>>>>>> df4bac4 (third commit)
       const adminAccounts = [
         {
           id: "admin_001",
@@ -157,11 +132,7 @@ export default function SignIn() {
     } catch (error) {
       toast({
         title: "Error signing in",
-<<<<<<< HEAD
-        description: "Please try again later.",
-=======
         description: (error as any)?.message || "Please try again later.",
->>>>>>> df4bac4 (third commit)
         variant: "destructive",
       });
     } finally {

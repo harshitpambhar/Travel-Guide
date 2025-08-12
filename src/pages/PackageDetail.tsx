@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useMemo } from "react";
-=======
 import { useEffect, useMemo, useState } from "react";
->>>>>>> df4bac4 (third commit)
 import { useParams } from "react-router-dom";
 import { Header } from "@/components/layout/header";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,29 +10,24 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { useForm } from "react-hook-form";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { MapPin, CalendarDays, Users, DollarSign, Clock } from "lucide-react";
-<<<<<<< HEAD
-import { samplePackages } from "@/utils/samplePackages";
-=======
 import { packageService } from "@/services/packageService";
->>>>>>> df4bac4 (third commit)
 import type { TravelPackage } from "@/types/travel-package";
 import { useToast } from "@/components/ui/use-toast";
 
+
 type BookingForm = {
-  name: string
-  email: string
-  phone: string
-  travelers: number
-  preferredDate: string
-  notes?: string
-}
+  name: string;
+  email: string;
+  phone: string;
+  travelers: number;
+  preferredDate: string;
+  notes?: string;
+};
+
 
 export default function PackageDetailPage() {
   const { id } = useParams();
   const { toast } = useToast();
-
-  const pkg: TravelPackage | undefined = useMemo(() => samplePackages.find(p => p.id === id), [id]);
-
   const [pkg, setPkg] = useState<TravelPackage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
