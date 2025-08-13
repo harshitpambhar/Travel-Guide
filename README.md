@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🌍 GlobeTrotter – AI-Powered Global Travel Planner
 
 **Team 80 – odoo Hackathon Project**  
@@ -7,11 +6,9 @@
 
 ---
 
-=======
 # GlobeTrotter - Team 80
 
 A comprehensive travel platform built with React, TypeScript, and modern web technologies.
->>>>>>> df4bac4 (third commit)
 
 ## 🚀 Features
 
