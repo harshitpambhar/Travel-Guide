@@ -1,39 +1,84 @@
-# 🌍 GlobeTrotter – AI-Powered Global Travel Planner
+# GlobeTrotter
 
-**odoo Hackathon Project**  
+GlobeTrotter is a modern travel booking and planning platform designed to help users discover, book, and manage travel experiences, flights, hotels, and packages. Built with a scalable architecture and a beautiful UI, it leverages the latest web technologies and integrates with Supabase for backend services.
 
+
+
+## Features
+- User authentication and profile management
+- Browse and book hotels, flights, experiences, and travel packages
+- Admin panel for managing locations and requests
+- AI-powered travel planner
+- Wishlist and booking management
+- Responsive design for mobile and desktop
+- Data import and migration scripts
+
+## Tech Stack
+- **Frontend:** React, TypeScript, Vite, Tailwind CSS
+- **Backend:** Supabase (PostgreSQL, Auth, Storage)
+- **State Management:** React Context API
+- **Linting & Formatting:** ESLint
+- **Other Tools:** PostCSS, Vite, npm
+
+## Project Structure
+```
+GlobeTrotter-Team80/
+├── public/                # Static assets
+├── scripts/               # Data import and admin scripts
+├── src/
+│   ├── assets/            # Images and illustrations
+│   ├── components/        # UI and layout components
+│   ├── hooks/             # Custom React hooks
+│   ├── lib/               # Supabase client and utilities
+│   ├── pages/             # Application pages (Hotels, Flights, Packages, etc.)
+│   ├── services/          # API service modules
+│   ├── types/             # TypeScript types
+│   ├── utils/             # Utility functions
+├── supabase/              # Database migrations and seeds
+├── package.json           # Project metadata and dependencies
+├── README.md              # Project documentation
+└── ...
+```
+
+## Setup & Installation
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/harshitpambhar/GlobeTrotter-Team80.git
+   cd GlobeTrotter-Team80
+   ```
+2. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+3. **Configure Supabase:**
+   - Create a Supabase project and update credentials in `src/lib/supabase.ts`.
+   - Run migration scripts in `supabase/migrations/` to set up the database.
+4. **Start the development server:**
+   ```sh
+   npm run dev
+   ```
+
+## Usage
+- Access the app at `http://localhost:5173` (default Vite port).
+- Sign up or log in to explore features.
+- Admins can access the admin panel for location and request management.
+- Use the AI Planner for personalized travel recommendations.
+
+## Contributing
+Contributions are welcome! Please read `USER_CONTRIBUTION_GUIDE.md` for guidelines.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/YourFeature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/YourFeature`)
+5. Open a pull request
+
+## License
+This project is licensed under the MIT License.
 
 ---
 
-# GlobeTrotter - Team 80
-
-A comprehensive travel platform built with React, TypeScript, and modern web technologies.
-
-## 🚀 Features
-
-### Authentication System
-- **User Signup**: Regular users can create accounts with name, email, phone, and password
-- **User & Admin Login**: Both regular users and administrators can sign in
-- **Security**: Admin accounts are pre-configured and cannot be created through signup
-- **Role-based Access**: Different interfaces for regular users and administrators
-
-#### Admin Accounts (Pre-configured)
-- **Admin User**: `admin@globetrotter.com` / `admin123`
-- **Super Admin**: `superadmin@globetrotter.com` / `super123`
-
-#### Authentication Flow
-1. **Regular Users**: Sign up → Sign in → Access user features
-2. **Administrators**: Sign in directly → Access admin panel
-3. **Security**: No public admin account creation to prevent unauthorized access
-
-### User Features
-- Browse travel destinations and experiences
-- Search for hotels, flights, and packages
-- Submit location requests for new destinations
-- Manage personal profile and preferences
-- Access AI-powered travel planning
-
-### Admin Features
+For more details, see the documentation files in the repository.
 - **Location Request Management**: Review, approve, or decline user-submitted locations
 - **User Management**: View and manage all registered users
 - **Content Management**: Manage hotels, experiences, packages, and flights
