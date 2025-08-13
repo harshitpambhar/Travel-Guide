@@ -1,8 +1,7 @@
 # 🌍 GlobeTrotter – AI-Powered Global Travel Planner
 
-**Team 80 – odoo Hackathon Project**  
-**TL:** Harshit Pambhar  
-**Members:** Sarthak Talaviya, Krish Ramanandi, Smit Sureja  
+**odoo Hackathon Project**  
+
 
 ---
 
